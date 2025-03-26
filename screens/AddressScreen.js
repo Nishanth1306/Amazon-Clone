@@ -19,7 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 const PORT = "192.168.0.105";
 
 const AddressScreen = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   const [name, setName] = useState("");
   const [mobileNo, setMobileNo] = useState("");
   const [houseNo, setHouseNo] = useState("");
@@ -30,18 +30,16 @@ const AddressScreen = () => {
   useEffect(() => {
     const fetchUser = async() => {
         const token = await AsyncStorage.getItem("authToken");
-        console.log("token", token);
+        //console.log("token", token);
         const decodedToken = jwtDecode(token);
-        console.log("decodedToken", decodedToken);
+        //console.log("decodedToken", decodedToken);
         const userId = decodedToken.userId;
         setUserId(userId)
     }
 
     fetchUser();
   },[]);
-  console.log(userId)
   
-
 
 
 

@@ -12,6 +12,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import ProductInfo from "../screens/ProductInfo";
 import AddAddressScreen from "../screens/AddAddressScreen";
 import AddressScreen from "../screens/AddressScreen";
+import CartScreen from "../screens/CartScreen";
+import Profile from "../screens/Profile";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,7 +39,7 @@ function BottomTabs() {
 
       <Tab.Screen
         name="You"
-        component={Register}
+        component={Profile}
         options={{
           tabBarLabel: "Profile",
           tabBarLabelStyle: { color: "#008E97" },
@@ -53,7 +55,7 @@ function BottomTabs() {
 
       <Tab.Screen
         name="Cart"
-        component={Register}
+        component={CartScreen}
         options={{
           tabBarLabel: "Cart",
           tabBarLabelStyle: { color: "#008E97" },

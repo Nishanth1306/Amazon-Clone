@@ -6,7 +6,7 @@ import {
   Pressable,
   TextInput,
 } from "react-native";
-import React, { useEffect, useState, useContext,useCallback } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
@@ -25,7 +25,6 @@ const AddAddressScreen = () => {
   useEffect(() => {
     fetchAddresses();
   }, []);
-
 
   const fetchAddresses = async () => {
     try {
@@ -78,7 +77,92 @@ const AddAddressScreen = () => {
           <EvilIcons name="arrow-right" size={24} color="black" />
         </Pressable>
 
-        <Pressable></Pressable>
+        <Pressable>
+          {addresses?.map((item, index) => (
+            <Pressable
+              style={{
+                borderWidth: 1,
+                borderColor: "#D0D0D0",
+                flexDirection: "column",
+                padding: 10,
+                gap: 5,
+                marginVertical: 10,
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
+              >
+                <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+                  {item?.name}
+                </Text>
+                <EvilIcons name="location" size={24} color="red" />
+              </View>
+
+              <Text style={{ fontSize: 15, color: "#181818" }}>
+                {item?.houseNo},{item?.landmark}
+              </Text>
+              <Text style={{ fontSize: 15, color: "#181818" }}>
+                {item?.street}
+              </Text>
+
+              <Text style={{ fontSize: 15, color: "#181818" }}> India</Text>
+
+              <Text style={{ fontSize: 15, color: "#181818" }}>
+                {" "}
+                Contact : {item.mobileNo}
+              </Text>
+
+              <Text style={{ fontSize: 15, color: "#181818" }}>
+                PinCode:{item?.postalCode}
+              </Text>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 10,
+                  marginTop: 10,
+                }}
+              >
+                <Pressable
+                  style={{
+                    backgroundColor: "#F5F5F5",
+                    paddingHorizontal: 10,
+                    paddingVertical: 6,
+                    borderWidth: 0.9,
+                    borderColor: "#D0D0D0",
+                  }}
+                >
+                  <Text>Edit</Text>
+                </Pressable>
+
+                <Pressable
+                  style={{
+                    backgroundColor: "#F5F5F5",
+                    paddingHorizontal: 10,
+                    paddingVertical: 6,
+                    borderWidth: 0.9,
+                    borderColor: "#D0D0D0",
+                  }}
+                >
+                  <Text>Remove</Text>
+                </Pressable>
+
+                <Pressable
+                  style={{
+                    backgroundColor: "#F5F5F5",
+                    paddingHorizontal: 10,
+                    paddingVertical: 6,
+                    borderWidth: 0.9,
+                    borderColor: "#D0D0D0",
+                  }}
+                >
+                  <Text>Set as Default</Text>
+                </Pressable>
+              </View>
+            </Pressable>
+          ))}
+        </Pressable>
       </View>
     </ScrollView>
   );
