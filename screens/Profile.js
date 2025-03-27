@@ -11,11 +11,13 @@ import {
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const Profile = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{backgroundColor:"pink"}}>
+      <ScrollView>
         <View style={styles.searchBar}>
           <Pressable style={styles.searchInput}>
             <AntDesign name="search1" size={24} color="black" />
@@ -27,35 +29,46 @@ const Profile = () => {
         <View
           style={{
             flexDirection: "row",
-            flexWrap:"wrap",
-            backgroundColor:"white",
+            flexWrap: "wrap",
+            backgroundColor: "white",
             alignItems: "center",
             width: "100%",
-            padding: 10,
-            
+            paddingTop: 10,
+            justifyContent: "space-between",
+            paddingHorizontal: 10,
+            marginBottom: 20,
           }}
         >
-
-            {["Your Orders", "Your Order", "Your Order"].map(e => {
-                return (
-                  <Pressable
-                    key={e}
-                    style={{
-                      height: 25,
-                      width: "40%",
-                      borderWidth: 1,
-                      borderColor: "black",
-                      borderRadius: 15,
-                      margin: 5,
-                    }}
-                  >
-                    <Text style={{ fontSize: 15, textAlign: "center" }}>
-                      {e}
-                    </Text>
-                  </Pressable>
-                );
-  
-            })}
+          {["Orders", " List", "Account", "Buy Again"].map((items) => {
+            return (
+              <Pressable
+                onPress={() => {
+                  if (items === "Orders") {
+                    console.log("Orders");
+                  } else if (items === "List") {
+                    console.log("List");
+                  } else if (items === "Account") {
+                    console.log("Account");
+                  } else if (items === "Buy Again") {
+                    navigation.navigate("Home");
+                  }
+                }}
+                key={items}
+                style={{
+                  height: 30,
+                  width: "40%",
+                  borderWidth: 1,
+                  borderColor: "black",
+                  borderRadius: 15,
+                  margin: 5,
+                }}
+              >
+                <Text style={{ fontSize: 15, textAlign: "center" }}>
+                  {items}
+                </Text>
+              </Pressable>
+            );
+          })}
         </View>
       </ScrollView>
     </SafeAreaView>
