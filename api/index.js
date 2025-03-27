@@ -9,7 +9,7 @@ import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 
 import User from "../api/models/userModel.js";
-
+import Order from "../api/models/order.js";
 
 dotenv.config();
 
@@ -90,11 +90,9 @@ app.post("/register", async (req, res) => {
 
     await sendVerificationEmail(newUser.email, newUser.verificationToken);
 
-    res
-      .status(201)
-      .json({
-        message: "User registered successfully. Please verify your email.",
-      });
+    res.status(201).json({
+      message: "User registered successfully. Please verify your email.",
+    });
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ message: "Error registering user" });
@@ -152,7 +150,7 @@ app.post("/login", async (req, res) => {
 app.post("/addresses", async (req, res) => {
   try {
     const { userId, address } = req.body;
-  
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -160,7 +158,6 @@ app.post("/addresses", async (req, res) => {
 
     user.addresses.push(address);
 
-   
     await user.save();
 
     res.status(200).json({ message: "Address created Successfully" });
@@ -168,7 +165,6 @@ app.post("/addresses", async (req, res) => {
     res.status(500).json({ message: "Error addding address" });
   }
 });
-
 
 app.get("/addresses/:userId", async (req, res) => {
   try {
@@ -186,4 +182,38 @@ app.get("/addresses/:userId", async (req, res) => {
   }
 });
 
- 
+app.post("/orders", async (req, res) => {
+  try {
+    const { userId, cartItems, totalPrice, shippingAddress, paymentMethod } =
+      req.body;
+    console.log("Request",req.body);
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const Products = cartItems.map((item) => ({
+      title:item?.title,
+      quantity: item?.quantity,
+      price: item?.price,
+      image: item?.image,
+    }));
+
+    const order = new Order({
+      user: userId,
+      products: Products,
+      totalPrice: totalPrice,
+      shippingAddress: shippingAddress,
+      paymentMethod: paymentMethod,
+    });
+
+    await order.save();
+    res.status(200).json({ message: "Order created successfully" });
+
+  } catch (error) {
+    res.status(500).json({ message: "Error creating order" });
+    console.log("Error creating order", error);
+  }
+});

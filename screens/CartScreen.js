@@ -14,6 +14,8 @@ import Entypo from "@expo/vector-icons/Entypo";
 import React from "react";
 import { useSelector,useDispatch } from "react-redux";
 import { decrementQuantity, incrementQuantity, removeFromCart } from "../redux/CartReducer";
+import { useNavigation } from "@react-navigation/native";
+
 
 
 const CartScreen = () => {
@@ -23,6 +25,7 @@ const CartScreen = () => {
     .reduce((curr, prev) => curr + prev, 0);
 
     const dispatch = useDispatch();
+    const navigation = useNavigation();
 
     const increaseQuantity = (item) => dispatch(incrementQuantity(item));  
     const decreaseQuantity = (item) => dispatch(decrementQuantity(item));
@@ -51,6 +54,7 @@ const CartScreen = () => {
         <Text style={{ marginHorizontal: 10 }}>EMI Option Available</Text>
 
         <Pressable
+        onPress={() => navigation.navigate("ConfirmationScreen")}
           style={{
             backgroundColor: "#FFC72C",
             padding: 10,

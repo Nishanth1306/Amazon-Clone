@@ -8,7 +8,7 @@ const orderSchema = new mongoose.Schema({
     },
     products:[
         {
-            name:{
+            title:{
                 type: String,
                 required: true,
             },
@@ -35,11 +35,11 @@ const orderSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        mobilenumber:{
+        mobileNo:{
             type: String,
             required: true,
         },
-        houseNumber:{
+        houseNo:{
             type: String,
             required: true,
         },
@@ -58,7 +58,7 @@ const orderSchema = new mongoose.Schema({
         },
 
     },
-    paymetMethod:{
+    paymentMethod:{
         type: String,
         required: true,
     },
@@ -71,4 +71,4 @@ const orderSchema = new mongoose.Schema({
 
 const Order = mongoose.model("Order",orderSchema);
 
-module.exports = Order;
+export default Order;
