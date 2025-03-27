@@ -12,13 +12,22 @@ import {
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { decrementQuantity, incrementQuantity, removeFromCart } from "../redux/CartReducer";
+
 
 const CartScreen = () => {
   const cart = useSelector((state) => state.cart.cart);
   const total = cart
     .map((item) => item.price * item.quantity)
     .reduce((curr, prev) => curr + prev, 0);
+
+    const dispatch = useDispatch();
+
+    const increaseQuantity = (item) => dispatch(incrementQuantity(item));  
+    const decreaseQuantity = (item) => dispatch(decrementQuantity(item));
+    const deleteItem = (item) => dispatch(removeFromCart(item));
+
 
   console.log(total);
   console.log(cart);
@@ -104,7 +113,15 @@ const CartScreen = () => {
                 </View>
               </Pressable>
 
-              <Pressable>
+              <Pressable
+                style={{
+                  marginTop: 15,
+                  marginBottom: 20,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
                 <View
                   style={{
                     flexDirection: "row",
@@ -114,7 +131,22 @@ const CartScreen = () => {
                     borderRadius: 5,
                   }}
                 >
-                  <Pressable 
+                  {item?.quantity > 1 ? ( 
+                    <Pressable
+                    onPress={() => decreaseQuantity(item)}
+                    style={{
+                      backgroundColor: "#D8D8D8",
+                      padding: 7,
+                      borderTopLeftRadius: 6,
+                      borderBottomLeftRadius: 6,
+                    }}
+                  >
+                    <AntDesign name="minus" size={24} color="black" />
+                  </Pressable>
+                  ):
+                  (
+                    <Pressable
+                    onPress={() => deleteItem(item)}
                     style={{
                       backgroundColor: "#D8D8D8",
                       padding: 7,
@@ -125,10 +157,87 @@ const CartScreen = () => {
                     <AntDesign name="delete" size={24} color="black" />
                   </Pressable>
 
+                  )}
                   
+
+                  <Pressable
+                    style={{
+                      backgroundColor: "white",
+                      paddingHorizontal: 18,
+                      paddingVertical: 6,
+                    }}
+                  >
+                    <Text>{item?.quantity}</Text>
+                  </Pressable>
+
+                  <Pressable
+                  onPress={() => increaseQuantity(item)}
+                    style={{
+                      backgroundColor: "#D8D8D8",
+                      padding: 7,
+                      borderTopRightRadius: 6,
+                      borderBottomRightRadius: 6,
+                    }}
+                  >
+                    <AntDesign name="plus" size={24} color="black" />
+                  </Pressable>
+
+
+                  <Pressable
+                  onPress={() => deleteItem(item)}
+                    style={{
+                      backgroundColor: "#D8D8D8",
+                      padding: 7,
+                      borderTopLeftRadius: 6,
+                      borderTopRightRadius: 6,
+                      borderBottomRightRadius: 6,
+                      borderBottomLeftRadius: 6,
+                      marginLeft: 30,
+                    }}
+                  >
+                    <Text>Delete</Text>
+                  </Pressable>
+
 
 
                 </View>
+
+              </Pressable>
+
+              <Pressable
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 10,
+                  marginBottom: 10,
+                  marginLeft: 10,
+                }}
+              >
+                <Pressable
+                  style={{
+                    backgroundColor: "white",
+                    paddingHorizontal: 8,
+                    paddingVertical: 10,
+                    borderRadius: 5,
+                    borderColor: "#C0C0C0",
+                    borderWidth: 0.6,
+                  }}
+                >
+                  <Text>Save for Later</Text>
+                </Pressable>
+
+                <Pressable
+                  style={{
+                    backgroundColor: "white",
+                    paddingHorizontal: 8,
+                    paddingVertical: 10,
+                    borderRadius: 5,
+                    borderColor: "#C0C0C0",
+                    borderWidth: 0.6,
+                  }}
+                >
+                  <Text>See More Like this</Text>
+                </Pressable>
               </Pressable>
             </View>
           ))}
