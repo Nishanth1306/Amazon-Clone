@@ -16,7 +16,6 @@ import {
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-// import Carousel from "react-native-reanimated-carousel";
 import { useState } from "react";
 import { UserType } from "../UserContext";
 import axios from "axios";
