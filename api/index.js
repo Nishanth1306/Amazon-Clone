@@ -133,21 +133,34 @@ const secretKey = generateSecretKey();
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+
     const user = await User.findOne({ email });
+
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
+
+ 
     if (user.password !== password) {
       return res.status(401).json({ message: "Invalid password" });
+    }
+
+    if (!user.verified) {
+      return res.status(403).json({
+        message: "Account not verified. Please check your email for verification link.",
+      });
     }
     const token = jwt.sign({ userId: user._id }, secretKey);
     console.log("User logged in successfully");
 
     res.status(200).json({ token });
+
   } catch (error) {
-    res.status(500).json({ message: "Login Failed" });
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Login failed. Please try again later." });
   }
 });
+
 
 app.post("/addresses", async (req, res) => {
   try {
