@@ -18,8 +18,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import config from "../src/config.js";
 
-
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
@@ -119,7 +119,7 @@ const Login = () => {
           </View>
         </View>
 
-        <View style={{ marginTop: 10 }}>
+        {/* <View style={{ marginTop: 10 }}>
           <View
             style={{
               flexDirection: "row",
@@ -149,6 +149,44 @@ const Login = () => {
               placeholder="Enter Password"
               secureTextEntry={true}
             />
+          </View>
+        </View> */}
+
+        <View style={{ marginTop: 10 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: "#D0D0D0",
+              borderRadius: 5,
+              marginTop: 10,
+              paddingHorizontal: 10,
+            }}
+          >
+            <MaterialIcons name="password" size={24} color="black" />
+
+            <TextInput
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              style={{
+                color: "grey",
+                marginVertical: 7,
+                width: 240,
+                fontSize: 16,
+                marginLeft: 10,
+                flex: 1,
+              }}
+              placeholder="Enter Password"
+              secureTextEntry={!showPassword}
+            />
+
+            <Pressable onPress={() => setShowPassword(!showPassword)}>
+              <MaterialCommunityIcons
+                name={showPassword ? "eye-off" : "eye"}
+                size={24}
+                color="black"
+              />
+            </Pressable>
           </View>
         </View>
 

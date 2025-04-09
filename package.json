@@ -27,7 +27,8 @@
     "react-native-razorpay": "^2.3.0",
     "react-native-reanimated": "~3.16.1",
     "react-native-reanimated-carousel": "^4.0.2",
-    "react-redux": "^9.2.0"
+    "react-redux": "^9.2.0",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
