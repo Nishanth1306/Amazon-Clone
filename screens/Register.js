@@ -46,7 +46,8 @@ const Register = ({ navigation }) => {
           .then((response) => {;
             Alert.alert(
               "Registration successful",
-              "You have been registered Successfully"
+              "You have been registered Successfully",
+              "Please Check your email for verification",
             );
             navigation.navigate("Login");
             setName("");
