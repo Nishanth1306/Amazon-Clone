@@ -1,103 +1,203 @@
 import {
+  Image,
   StyleSheet,
   Text,
   View,
-  Pressable,
   ScrollView,
-  TextInput,
-  Platform,
-  SafeAreaView,
+  Pressable,
 } from "react-native";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import Entypo from "@expo/vector-icons/Entypo";
-import React from "react";
+import React, { useLayoutEffect, useEffect, useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
+import axios from "axios";
+import { UserType } from "../UserContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
+const PORT = "192.168.0.105";
 
 const Profile = () => {
+  const { userId, setUserId } = useContext(UserType);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={styles.searchBar}>
-          <Pressable style={styles.searchInput}>
-            <AntDesign name="search1" size={24} color="black" />
-            <TextInput placeholder="Search" style={styles.input} />
-          </Pressable>
-          <Entypo name="mic" size={24} color="black" />
-        </View>
-
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "",
+      headerStyle: {
+        backgroundColor: "#00CED1",
+      },
+      headerLeft: () => (
+        <Image
+          style={{ width: 140, height: 120, resizeMode: "contain" }}
+          source={{
+            uri: "https://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c518.png",
+          }}
+        />
+      ),
+      headerRight: () => (
         <View
           style={{
             flexDirection: "row",
-            flexWrap: "wrap",
-            backgroundColor: "white",
             alignItems: "center",
-            width: "100%",
-            paddingTop: 10,
-            justifyContent: "space-between",
-            paddingHorizontal: 10,
-            marginBottom: 20,
+            gap: 6,
+            marginRight: 12,
           }}
         >
-          {["Orders", " List", "Account", "Buy Again"].map((items) => {
-            return (
-              <Pressable
-                onPress={() => {
-                  if (items === "Orders") {
-                    console.log("Orders");
-                  } else if (items === "List") {
-                    console.log("List");
-                  } else if (items === "Account") {
-                    console.log("Account");
-                  } else if (items === "Buy Again") {
-                    navigation.navigate("Home");
-                  }
-                }}
-                key={items}
-                style={{
-                  height: 30,
-                  width: "40%",
-                  borderWidth: 1,
-                  borderColor: "black",
-                  borderRadius: 15,
-                  margin: 5,
-                }}
-              >
-                <Text style={{ fontSize: 15, textAlign: "center" }}>
-                  {items}
-                </Text>
-              </Pressable>
-            );
-          })}
+          <Ionicons name="notifications-outline" size={24} color="black" />
+
+          <AntDesign name="search1" size={24} color="black" />
         </View>
+      ),
+    });
+  }, []);
+  const [user, setUser] = useState();
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get(
+          `http://${PORT}:3000/profile/${userId}`
+        );
+        const { user } = response.data;
+        setUser(user);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+  const logout = () => {
+    clearAuthToken();
+  };
+  const clearAuthToken = async () => {
+    await AsyncStorage.removeItem("authToken");
+    console.log("auth token cleared");
+    navigation.replace("Login");
+  };
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(
+          `http://${PORT}:3000/orders/${userId}`
+        );
+        const orders = response.data.orders;
+        setOrders(orders);
+
+        setLoading(false);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+  console.log("orders", orders);
+  return (
+    <ScrollView style={{ padding: 10, flex: 1, backgroundColor: "white" }}>
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+        Welcome {user?.name}
+      </Text>
+
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 10,
+          marginTop: 12,
+        }}
+      >
+        <Pressable
+          style={{
+            padding: 10,
+            backgroundColor: "#E0E0E0",
+            borderRadius: 25,
+            flex: 1,
+          }}
+        >
+          <Text style={{ textAlign: "center" }}>Your orders</Text>
+        </Pressable>
+
+        <Pressable
+          style={{
+            padding: 10,
+            backgroundColor: "#E0E0E0",
+            borderRadius: 25,
+            flex: 1,
+          }}
+        >
+          <Text style={{ textAlign: "center" }}>Your Account</Text>
+        </Pressable>
+      </View>
+
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 10,
+          marginTop: 12,
+        }}
+      >
+        <Pressable
+          style={{
+            padding: 10,
+            backgroundColor: "#E0E0E0",
+            borderRadius: 25,
+            flex: 1,
+          }}
+        >
+          <Text style={{ textAlign: "center" }}>Buy Again</Text>
+        </Pressable>
+
+        <Pressable
+          onPress={logout}
+          style={{
+            padding: 10,
+            backgroundColor: "#E0E0E0",
+            borderRadius: 25,
+            flex: 1,
+          }}
+        >
+          <Text style={{ textAlign: "center" }}>Logout</Text>
+        </Pressable>
+      </View>
+
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {loading ? (
+          <Text>Loading...</Text>
+        ) : orders.length > 0 ? (
+          orders.map((order) => (
+            <Pressable
+              style={{
+                marginTop: 20,
+                padding: 15,
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: "#d0d0d0",
+                marginHorizontal: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              key={order._id}
+            >
+           
+              {order.products.slice(0, 1)?.map((product) => (
+                <View style={{ marginVertical: 10 }} key={product._id}>
+                  <Image
+                    source={{ uri: product.image }}
+                    style={{ width: 100, height: 100, resizeMode: "contain" }}
+                  />
+                </View>
+              ))}
+            </Pressable>
+          ))
+        ) : (
+          <Text>No orders found</Text>
+        )}
       </ScrollView>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
 export default Profile;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    paddingTop: Platform.OS === "android" ? 40 : 0,
-  },
-  searchBar: {
-    backgroundColor: "#00CED1",
-    padding: 10,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  searchInput: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 7,
-    gap: 10,
-    backgroundColor: "white",
-    borderRadius: 5,
-    height: 40,
-    flex: 1,
-    paddingLeft: 10,
-  },
-});
+const styles = StyleSheet.create({});
