@@ -4,15 +4,30 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    minlength: 3,
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    validate: {
+      validator: function (email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      },
+      message: "Please enter a valid email address",
+    },
   },
   password: {
     type: String,
     required: true,
+    minlength: 6,
+    validate: {
+      validator: function (password) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/.test(password);
+      },
+      message:
+        "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+    },
   },
   verified: {
     type: Boolean,
