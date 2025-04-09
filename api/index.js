@@ -186,7 +186,7 @@ app.post("/orders", async (req, res) => {
   try {
     const { userId, cartItems, totalPrice, shippingAddress, paymentMethod } =
       req.body;
-    console.log("Request",req.body);
+    //console.log("Request",req.body);
 
     const user = await User.findById(userId);
 

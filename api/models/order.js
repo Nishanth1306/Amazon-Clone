@@ -1,3 +1,4 @@
+import { miniSerializeError } from '@reduxjs/toolkit';
 import mongoose from 'mongoose';
 
 const orderSchema = new mongoose.Schema({
@@ -34,18 +35,23 @@ const orderSchema = new mongoose.Schema({
         name:{
             type: String,
             required: true,
+            minlength: 3,
+        
         },
         mobileNo:{
             type: String,
             required: true,
+            minlength: 10,
         },
         houseNo:{
             type: String,
             required: true,
+            minlength:1,
         },
         street:{
             type: String,
             required: true,
+            minlength:3,
         },
         landmark:{
             type: String,
@@ -54,7 +60,8 @@ const orderSchema = new mongoose.Schema({
         postalCode:{
             type:String,
             required: true,
-
+            minlength:6,
+            maxlength:6,
         },
 
     },
