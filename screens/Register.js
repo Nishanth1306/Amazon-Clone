@@ -52,10 +52,17 @@ const Register = ({ navigation }) => {
             setPassword("");
           })
           .catch((error) => {
-            Alert.alert(
-              "Registration Error",
-              "An error occurred while registering"
-            );
+            if (error.response && error.response.data.errors) {
+              const errorData = error.response.data.errors;
+              const errorMessages = Object.values(errorData).map(
+                (e) => `${e.path.toUpperCase()}: ${e.message}`
+              ).join('\n');
+          
+              Alert.alert("Registration Error", errorMessages);
+            } else {
+              Alert.alert("Error", error.response?.data?.message || "Something went wrong");
+            }
+          
             console.log("registration failed", error);
           });
       };

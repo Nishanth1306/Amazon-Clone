@@ -39,7 +39,7 @@ const orderSchema = new mongoose.Schema({
         
         },
         mobileNo:{
-            type: String,
+            type: Number,
             required: true,
             minlength: 10,
         },
@@ -56,12 +56,14 @@ const orderSchema = new mongoose.Schema({
         landmark:{
             type: String,
             required: true,
+            minlength:3,
         },
         postalCode:{
-            type:String,
+            type:Number,
             required: true,
             minlength:6,
             maxlength:6,
+
         },
 
     },

@@ -44,15 +44,18 @@ const Login = () => {
 
     axios
       .post(`http://${PORT}:3000/login`, user)
-      .then((response) => {
-        console.log(response);
+      .then(async (response) => {
         const token = response.data.token;
-        AsyncStorage.setItem("authToken", token);
+        await AsyncStorage.setItem("authToken", token);
+
         navigation.replace("Main");
       })
       .catch((error) => {
-        Alert.alert("Login Error", "Invalid Email");
-        console.log(error);
+        const errorMessage =
+          error.response?.data?.message || "Something went wrong during login";
+
+        Alert.alert("Login Error", errorMessage);
+        console.log("Login failed:", error);
       });
   };
   return (
