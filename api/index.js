@@ -68,6 +68,30 @@ const sendVerificationEmail = async (email, verificationToken) => {
     console.error("Error sending verification email:", error);
   }
 };
+const sendForgotPasswordOTPEmail = async (email, otp) => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "Reset Your Password - OTP Verification",
+    text: `Your OTP for password reset is: ${otp}\nThis OTP is valid for 10 minutes.`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Password reset OTP email sent successfully");
+  } catch (error) {
+    console.error("Error sending OTP email:", error);
+  }
+};
+
 
 app.post("/register", async (req, res) => {
   try {
@@ -262,5 +286,62 @@ app.get("/profile/:userId", async (req, res) => {
     res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ message: "Error retrieving the user profile" });
+  }
+});
+
+app.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.resetPasswordOTP = otp;
+    user.resetPasswordExpires = Date.now() + 5 * 60 * 1000; 
+
+    await user.save();
+    await sendForgotPasswordOTPEmail(email, otp);
+
+    res.status(200).json({ message: "OTP sent to email" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to send OTP", error });
+  }
+});
+
+app.post("/reset-password", async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    console.log(user); 
+
+    if (
+      !user ||
+      user.resetPasswordOTP !== otp ||
+      !user.resetPasswordExpires ||
+      user.resetPasswordExpires < Date.now()
+    ) {
+      return res.status(400).json({ message: "Invalid or expired OTP" });
+    }
+
+    const isValidPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(newPassword);
+    if (!isValidPassword) {
+      return res.status(400).json({
+        message:
+          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+      });
+    }
+
+    user.password = newPassword;
+    user.resetPasswordOTP = null;
+    user.resetPasswordExpires = null;
+
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successfully!" });
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    res.status(500).json({ message: "Something went wrong" });
   }
 });

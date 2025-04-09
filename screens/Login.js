@@ -199,9 +199,14 @@ const Login = () => {
           }}
         >
           <Text>Keep me Logged in</Text>
-          <Text style={{ color: "#007fff", fontWeight: "500" }}>
+          {/* <Text style={{ color: "#007fff", fontWeight: "500" }}>
             Forgot Password
-          </Text>
+          </Text> */}
+          <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
+            <Text style={{ color: "#007fff", fontWeight: "500" }}>
+              Forgot Password?
+            </Text>
+          </Pressable>
         </View>
 
         <View style={{ marginTop: 50 }} />

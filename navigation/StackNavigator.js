@@ -16,6 +16,8 @@ import CartScreen from "../screens/CartScreen";
 import Profile from "../screens/Profile";
 import ConfirmationScreen from "../screens/ConfirmationScreen";
 import OrderScreen from "../screens/OrderScreen";
+import ForgotPassword from "../screens/ForgotPassword";
+import ResetPassword from "../screens/ResetPassword";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -106,6 +108,14 @@ const StackNavigator = () => {
         />
 
         <Stack.Screen
+          name="ForgotPassword"
+          component={ForgotPassword}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="ResetPassword"
+         component={ResetPassword} />
+
+        <Stack.Screen
           name="AddressScreen"
           component={AddressScreen}
           options={{ headerShown: false }}
@@ -118,9 +128,9 @@ const StackNavigator = () => {
         />
 
         <Stack.Screen
-        name="Order"
-        component={OrderScreen}
-        options={{ headerShown: false }}
+          name="Order"
+          component={OrderScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

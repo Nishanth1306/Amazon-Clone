@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 3,
   },
+  resetPasswordOTP: String,
+resetPasswordExpires: Date,
+
+
   email: {
     type: String,
     required: true,
