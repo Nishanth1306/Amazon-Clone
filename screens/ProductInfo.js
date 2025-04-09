@@ -221,6 +221,7 @@ const ProductInfo = () => {
         </Pressable>
 
         <Pressable
+        onPress={()=> navigation.navigate("ConfirmationScreen")}
           style={{
             backgroundColor: "#FFAC1C",
             padding: 10,

@@ -5,6 +5,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 3,
+    validate:{
+      validator: function (name) {
+        return /^[a-zA-Z ]+$/.test(name);
+      },
+      message: "Name can only contain letters and spaces",
+    }
   },
   resetPasswordOTP: String,
 resetPasswordExpires: Date,

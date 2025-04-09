@@ -37,7 +37,11 @@ app.get("/", (req, res) => {
   res.send("Server is not running");
 });
 
-const IP = "192.168.0.105";
+const IP = "192.168.234.218";
+
+// 192.168.234.218
+//
+//
 //192.168.34.60
 const PORT = 3000;
 

@@ -32,7 +32,9 @@ import { jwtDecode } from "jwt-decode";
 import config from "../src/config.js";
 
 
+
 const Home = () => {
+  const [filteredData, setFilteredData] = useState([]);
   const { width } = useWindowDimensions();
   const [Products, setProducts] = useState([]);
   const navigation = useNavigation();
