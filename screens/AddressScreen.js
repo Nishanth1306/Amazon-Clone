@@ -16,7 +16,9 @@ import { useNavigation } from "@react-navigation/native";
 
 
 
-const PORT = "192.168.0.105";
+import config from "../src/config.js";
+
+
 
 const AddressScreen = () => {
   const navigation = useNavigation();
@@ -54,7 +56,7 @@ const AddressScreen = () => {
           postalCode
       }
 
-      axios.post(`http://${PORT}:3000/addresses`,{userId,address}).then((response) => {
+      axios.post(`${config.API_URL}/addresses`,{userId,address}).then((response) => {
           Alert.alert("Success","Addresses added successfully");
           setName("");
           setMobileNo("");

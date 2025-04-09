@@ -16,8 +16,9 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import config from "../src/config.js";
 
-const PORT = "192.168.0.105";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +44,7 @@ const Login = () => {
     };
 
     axios
-      .post(`http://${PORT}:3000/login`, user)
+      .post(`${config.API_URL}/login`, user)
       .then(async (response) => {
         const token = response.data.token;
         await AsyncStorage.setItem("authToken", token);

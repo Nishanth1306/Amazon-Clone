@@ -20,11 +20,13 @@ import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
 
 
+
+
 // const API_URL = Platform.OS === 'android' 
 //     ? "http://10.0.2.2:3000"       
 //     : "http://127.0.0.1:3000";  
 
-const PORT = "192.168.0.105";
+
 const Register = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -40,7 +42,7 @@ const Register = ({ navigation }) => {
         };
     
         axios
-          .post(`http://${PORT}:3000/register`, user)
+          .post(`${config.API_URL}/register`, user)
           .then((response) => {;
             Alert.alert(
               "Registration successful",

@@ -29,7 +29,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Carousel from "react-native-reanimated-carousel";
 import { jwtDecode } from "jwt-decode";
 
-const PORT = "192.168.0.105";
+import config from "../src/config.js";
+
+
 const Home = () => {
   const { width } = useWindowDimensions();
   const [Products, setProducts] = useState([]);
@@ -65,7 +67,7 @@ const Home = () => {
   const fetchAddresses = async () => {
     try {
       const response = await axios.get(
-        `http://${PORT}:3000/addresses/${userId}`
+        `${config.API_URL}/addresses/${userId}`
       );
       const { addresses } = response.data;
 

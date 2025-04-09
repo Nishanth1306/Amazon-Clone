@@ -13,8 +13,9 @@ import axios from "axios";
 import { UserType } from "../UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import config from "../src/config.js";
 
-const PORT = "192.168.0.105";
+
 
 const Profile = () => {
   const { userId, setUserId } = useContext(UserType);
@@ -56,7 +57,7 @@ const Profile = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await axios.get(
-          `http://${PORT}:3000/profile/${userId}`
+          `${config.API_URL}/profile/${userId}`
         );
         const { user } = response.data;
         setUser(user);
@@ -79,7 +80,7 @@ const Profile = () => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `http://${PORT}:3000/orders/${userId}`
+          `${config.API_URL}/orders/${userId}`
         );
         const orders = response.data.orders;
         setOrders(orders);

@@ -9,7 +9,9 @@ import { cleanCart } from "../redux/CartReducer";
 import { useNavigation } from "@react-navigation/native";
 import RazorpayCheckout from "react-native-razorpay";
 
-const PORT = "192.168.0.105";
+import config from "../src/config.js";
+
+
 
 
 
@@ -34,7 +36,7 @@ const ConfirmationScreen = () => {
   const fetchAddresses = async () => {
     try {
       const response = await axios.get(
-        `http://${PORT}:3000/addresses/${userId}`
+        `${config.API_URL}/addresses/${userId}`
       );
       const { addresses } = response.data;
 
@@ -58,7 +60,7 @@ const ConfirmationScreen = () => {
       };
 
       const response = await axios.post(
-        `http://${PORT}:3000/orders`,
+        `${config.API_URL}/orders`,
         orderData
       );
       if (response.status === 200) {
@@ -101,7 +103,7 @@ const ConfirmationScreen = () => {
       };
 
       const response = await axios.post(
-        `http://${PORT}:3000/orders`,
+        `${config.API_URL}/orders`,
         orderData
       );
       if (response.status === 200) {

@@ -14,7 +14,9 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import { UserType } from "../UserContext";
 
-const PORT = "192.168.0.105";
+import config from "../src/config.js";
+
+
 
 
 const AddAddressScreen = () => {
@@ -30,7 +32,7 @@ const AddAddressScreen = () => {
   const fetchAddresses = async () => {
     try {
       const response = await axios.get(
-        `http://${PORT}:3000/addresses/67e3b41271db4f020e0e2417`
+        `${config.API_URL}/addresses/67e3b41271db4f020e0e2417`
       );
       const { addresses } = response.data;
 
