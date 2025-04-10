@@ -12,6 +12,9 @@ import {
   StyleSheet,
   Dimensions,
   useWindowDimensions,
+  FlatList,
+  TouchableOpacity,
+  list
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -28,12 +31,13 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Carousel from "react-native-reanimated-carousel";
 import { jwtDecode } from "jwt-decode";
-
+import { fetchAmazonProducts } from "../amazon/amazon.js";
 import config from "../src/config.js";
 
 
 
 const Home = () => {
+ 
   const [filteredData, setFilteredData] = useState([]);
   const { width } = useWindowDimensions();
   const [Products, setProducts] = useState([]);
@@ -65,12 +69,13 @@ const Home = () => {
       fetchAddresses();
     }
   }, [userId, modalVisible]);
-  
+
+
+
+
   const fetchAddresses = async () => {
     try {
-      const response = await axios.get(
-        `${config.API_URL}/addresses/${userId}`
-      );
+      const response = await axios.get(`${config.API_URL}/addresses/${userId}`);
       const { addresses } = response.data;
 
       setAddresses(addresses);
@@ -92,40 +97,56 @@ const Home = () => {
     fetchProducts();
   }, []);
 
-  const list = [
+  const [aproducts, setaProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("Phone"); // default
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const fetched = await fetchAmazonProducts(selectedCategory);
+      setProducts(fetched);
+    };
+
+    loadProducts();
+  }, [selectedCategory]);
+
+  // const handleCategoryPress = (categoryName) => {
+  //   setSelectedCategory(categoryName);
+  // };
+
+  const categories = [
     {
-      id: "0",
+      // id: "0",
       image: "https://m.media-amazon.com/images/I/41EcYoIZhIL._AC_SY400_.jpg",
-      name: "Home",
+      id: "Home",
     },
     {
-      id: "1",
+      // id: "1",
       image:
         "https://m.media-amazon.com/images/G/31/img20/Events/Jup21dealsgrid/blockbuster.jpg",
-      name: "Deals",
+      id: "Deals",
     },
     {
-      id: "3",
+      // id: "3",
       image:
         "https://images-eu.ssl-images-amazon.com/images/I/31dXEvtxidL._AC_SX368_.jpg",
-      name: "Electronics",
+      id: "Electronics",
     },
     {
-      id: "4",
+      // id: "4",
       image:
         "https://m.media-amazon.com/images/G/31/img20/Events/Jup21dealsgrid/All_Icons_Template_1_icons_01.jpg",
-      name: "Mobiles",
+      id: "Mobiles",
     },
     {
-      id: "5",
+      // id: "5",
       image:
         "https://m.media-amazon.com/images/G/31/img20/Events/Jup21dealsgrid/music.jpg",
-      name: "Music",
+      id: "Music",
     },
     {
-      id: "6",
+      // id: "6",
       image: "https://m.media-amazon.com/images/I/51dZ19miAbL._AC_SY350_.jpg",
-      name: "Fashion",
+      id: "Fashion",
     },
   ];
 
@@ -296,7 +317,7 @@ const Home = () => {
     dispatch(addToCartAction(product));
   };
   const [modalVisible, setModalVisible] = useState(false);
-
+  
   return (
     <>
       <SafeAreaView style={styles.container}>
@@ -316,34 +337,44 @@ const Home = () => {
             <Entypo name="location-pin" size={24} color="black" />
 
             <Pressable>
-
               {selectedAddress ? (
                 <Text>
-                  Delivery To  {selectedAddress?.name} - {selectedAddress?.street}
+                  Delivery To {selectedAddress?.name} -{" "}
+                  {selectedAddress?.street}
                 </Text>
               ) : (
-                <Text style={{fontSize: 13,fontWeight:"500" }}> Add a Address</Text>
+                <Text style={{ fontSize: 13, fontWeight: "500" }}>
+                  {" "}
+                  Add a Address
+                </Text>
               )}
-              
-
-
-
             </Pressable>
 
             <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
           </Pressable>
 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {list.map((item, index) => (
-              <Pressable key={index} style={styles.categoryItem}>
+          <View style={{ flex: 1, padding: 10 }}>
+            {/* Categories */}
+            <FlatList
+              data={categories}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                style={{ alignItems: "center", marginRight: 15 }}
+                onPress={() => navigation.navigate("CategoryProductsScreen", { query: item.id })} 
+              >
                 <Image
-                  style={styles.categoryImage}
                   source={{ uri: item.image }}
+                  style={{ width: 60, height: 60, borderRadius: 30 }}
                 />
-                <Text style={styles.categoryText}>{item?.name}</Text>
-              </Pressable>
-            ))}
-          </ScrollView>
+                <Text>{item.id}</Text>
+              </TouchableOpacity>
+              
+              )}
+            />
+          </View>
 
           <Carousel
             width={width}
@@ -526,19 +557,20 @@ const Home = () => {
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {addresses.map((item, index) => (
               <Pressable
-              onPress={() => setSelectedAddress(item)}
+                onPress={() => setSelectedAddress(item)}
                 style={{
                   width: 140,
                   height: 140,
                   borderColor: "#D0D0D0",
-                  borderWidth:1,
-                  marginTop:10,
+                  borderWidth: 1,
+                  marginTop: 10,
                   padding: 10,
                   justifyContent: "center",
                   alignItems: "center",
                   gap: 3,
                   marginRight: 15,
-                  backgroundColor:selectedAddress===item ? "#FBCEB1" : "white",
+                  backgroundColor:
+                    selectedAddress === item ? "#FBCEB1" : "white",
                 }}
               >
                 <View
@@ -549,10 +581,16 @@ const Home = () => {
                   </Text>
                   <EvilIcons name="location" size={24} color="red" />
                 </View>
-                <Text numberOfLines={1} style={{width:130,fontSize:13,textAlign:"center"}}>
+                <Text
+                  numberOfLines={1}
+                  style={{ width: 130, fontSize: 13, textAlign: "center" }}
+                >
                   {item?.houseNo},{item?.landmark}
                 </Text>
-                <Text numberOfLines={1} style={{width:130,fontSize:13,textAlign:"center"}}>
+                <Text
+                  numberOfLines={1}
+                  style={{ width: 130, fontSize: 13, textAlign: "center" }}
+                >
                   {item?.street}
                 </Text>
               </Pressable>

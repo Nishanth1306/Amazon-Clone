@@ -18,6 +18,7 @@ import ConfirmationScreen from "../screens/ConfirmationScreen";
 import OrderScreen from "../screens/OrderScreen";
 import ForgotPassword from "../screens/ForgotPassword";
 import ResetPassword from "../screens/ResetPassword";
+import CategoryProductsScreen from "../screens/CategoryProductsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -112,8 +113,7 @@ const StackNavigator = () => {
           component={ForgotPassword}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="ResetPassword"
-         component={ResetPassword} />
+        <Stack.Screen name="ResetPassword" component={ResetPassword} />
 
         <Stack.Screen
           name="AddressScreen"
@@ -125,6 +125,11 @@ const StackNavigator = () => {
           name="ConfirmationScreen"
           component={ConfirmationScreen}
           options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="CategoryProductsScreen"
+          component={CategoryProductsScreen}
         />
 
         <Stack.Screen
