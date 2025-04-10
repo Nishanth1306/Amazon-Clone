@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
   res.send("Server is not running");
 });
 
-const IP = "192.168.234.218";
+const IP = "192.168.0.105";
 
 // 192.168.234.218
 //
@@ -205,7 +205,7 @@ app.post("/addresses", async (req, res) => {
 
     res.status(200).json({ message: "Address created Successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error addding address" });
+    res.status(500).json({ message:"Make Sure You Have Entered All the Required Fields " });
   }
 });
 

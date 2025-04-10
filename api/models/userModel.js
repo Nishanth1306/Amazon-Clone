@@ -1,5 +1,68 @@
 import mongoose from "mongoose";
 
+// //name: String,
+// mobileNo: String,
+// houseNo: String,
+// street: String,
+// landmark: String,
+// city: String,
+// country: String,
+// postalCode: String,
+
+const addressSchema = new mongoose.Schema({
+  name:{
+    type: String,
+    required: true,
+    validate:{
+      validator: function (name) {
+        return /^[a-zA-Z ]+$/.test(name);
+      },
+      message: "Name can only contain letters and spaces",
+    }
+  },
+  mobileNo: {
+    type: String,
+    required: true,
+    validate:{
+      validator: function (mobileNo) {
+        return /^[0-9]{10}$/.test(mobileNo);
+      },
+      message: "Mobile number must be 10 digits",
+    }
+  },
+  houseNo: {
+    type: String,
+    required: true,
+  },
+  street: {
+    type: String,
+    required: true,
+  },
+  landmark: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  country: {
+    type: String,
+    required: true,
+  },
+  postalCode: {
+    type: String,
+    required: true,
+    validate:{
+      validator: function (postalCode) {
+        return /^[0-9]{6}$/.test(postalCode);
+      },
+      message: "Postal code must be 6 digits",
+    }
+  },
+})
+
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -45,18 +108,7 @@ resetPasswordExpires: Date,
     default: false,
   },
   verificationToken: String,
-  addresses: [
-    {
-      name: String,
-      mobileNo: String,
-      houseNo: String,
-      street: String,
-      landmark: String,
-      city: String,
-      country: String,
-      postalCode: String,
-    },
-  ],
+  addresses: [addressSchema],
   orders: [
     {
       type: mongoose.Schema.Types.ObjectId,

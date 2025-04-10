@@ -41,38 +41,58 @@ const AddressScreen = () => {
 
     fetchUser();
   },[]);
-  
 
 
 
 
   const handleAddAddress = () => {
-      const address = {
-          name,
-          mobileNo,
-          houseNo,
-          street,
-          landmark,
-          postalCode
-      }
-
-      axios.post(`${config.API_URL}/addresses`,{userId,address}).then((response) => {
-          Alert.alert("Success","Addresses added successfully");
-          setName("");
-          setMobileNo("");
-          setHouseNo("");
-          setStreet("");
-          setLandmark("");
-          setPostalCode("");
-
-          setTimeout(() => {
-            navigation.goBack();
-          },500)
-      }).catch((error) => {
-          Alert.alert("Error","Failed to add address")
-          console.log("error",error)
+    const address = {
+        name,
+        mobileNo,
+        houseNo,
+        street,
+        landmark,
+        postalCode
+    }
+  
+  
+    axios
+      .post(`${config.API_URL}/addresses`, { userId, address })
+      .then((response) => {
+        Alert.alert("Success", "Address added successfully");
+        setName("");
+        setMobileNo("");
+        setHouseNo("");
+        setStreet("");
+        setLandmark("");
+        setPostalCode("");
+  
+        setTimeout(() => {
+          navigation.goBack();
+        }, 500);
       })
-  }
+      .catch((error) => {
+        const errorMessage =
+          error.response?.data?.message || "Failed to add address";
+        Alert.alert("Error", errorMessage);
+        console.log("error", error);
+      });
+  };
+  
+  
+
+
+
+
+  
+
+
+
+
+
+
+
+
   return (
     <ScrollView style={{ marginTop: 50 }}>
       <View style={{ height: 50, backgroundColor: "#00CED1" }} />
