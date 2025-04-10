@@ -19,6 +19,7 @@ import OrderScreen from "../screens/OrderScreen";
 import ForgotPassword from "../screens/ForgotPassword";
 import ResetPassword from "../screens/ResetPassword";
 import CategoryProductsScreen from "../screens/CategoryProductsScreen";
+import LandingPage from "../screens/LandingPage";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -80,7 +81,7 @@ function BottomTabs() {
 const StackNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen
           name="Login"
           component={Login}
@@ -130,6 +131,12 @@ const StackNavigator = () => {
         <Stack.Screen
           name="CategoryProductsScreen"
           component={CategoryProductsScreen}
+        />
+
+        <Stack.Screen
+          name="Landing"
+          component={LandingPage}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
