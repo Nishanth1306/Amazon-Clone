@@ -193,8 +193,10 @@ app.post("/login", async (req, res) => {
 app.post("/addresses", async (req, res) => {
   try {
     const { userId, address } = req.body;
-
+    
+    
     const user = await User.findById(userId);
+    console.log(user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -206,6 +208,7 @@ app.post("/addresses", async (req, res) => {
     res.status(200).json({ message: "Address created Successfully" });
   } catch (error) {
     res.status(500).json({ message:"Make Sure You Have Entered All the Required Fields " });
+    console.error(error)
   }
 });
 

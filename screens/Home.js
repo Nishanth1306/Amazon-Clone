@@ -554,7 +554,7 @@ const Home = () => {
             </Text>
           </View>
 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
             {addresses.map((item, index) => (
               <Pressable
                 onPress={() => setSelectedAddress(item)}

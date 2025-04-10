@@ -2,7 +2,7 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
+  ScrollView,                                                                        
   Pressable,
   TextInput,
 } from "react-native";
