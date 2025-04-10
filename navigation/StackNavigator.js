@@ -131,6 +131,7 @@ const StackNavigator = () => {
         <Stack.Screen
           name="CategoryProductsScreen"
           component={CategoryProductsScreen}
+          options={{headerShown: false}}
         />
 
         <Stack.Screen
