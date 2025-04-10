@@ -13,11 +13,13 @@ const addressSchema = new mongoose.Schema({
   name:{
     type: String,
     required: true,
-    validate:{
+    
+    validate: {
       validator: function (name) {
-        return /^[a-zA-Z ]+$/.test(name);
+        const isValid = /^(?!.*  )[A-Za-z]+(?: [A-Za-z]+)*$/.test(name);
+        return isValid && name.length >= 3 && name.length <= 50;
       },
-      message: "Name can only contain letters and spaces",
+      message: "Name must be 3–50 characters long, contain only letters, and have no consecutive spaces.",
     }
   },
   mobileNo: {
