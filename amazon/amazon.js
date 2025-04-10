@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_KEY = '6f03c24abbmshc4253518007c66fp1cf467jsn42636c27edfa';
+const API_KEY = 'dd87f09ed3mshee0b2f36f365be3p1b4f72jsnb149958c7626';
 
 export const fetchAmazonProducts = async (query = 'Phone') => {
   const options = {
@@ -16,7 +16,7 @@ export const fetchAmazonProducts = async (query = 'Phone') => {
       deals_and_discounts: 'NONE',
     },
     headers: {
-      'x-rapidapi-key': '6f03c24abbmshc4253518007c66fp1cf467jsn42636c27edfa',
+      'x-rapidapi-key': 'dd87f09ed3mshee0b2f36f365be3p1b4f72jsnb149958c7626',
     'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com',
     },
   };
