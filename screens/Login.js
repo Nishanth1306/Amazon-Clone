@@ -198,7 +198,7 @@ const Login = () => {
             justifyContent: "space-between",
           }}
         >
-          <Text>Keep me Logged in</Text>
+          <Text></Text>
           {/* <Text style={{ color: "#007fff", fontWeight: "500" }}>
             Forgot Password
           </Text> */}
