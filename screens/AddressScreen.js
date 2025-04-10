@@ -22,8 +22,8 @@ const AddressSchema = Yup.object().shape({
   name: Yup.string()
     .matches(/^[a-zA-Z ]+$/, "Only letters and spaces are allowed")
     .required("Name is required"),
-  mobileNo: Yup.string()
-    .matches(/^[0-9]{10}$/, "Mobile number must be 10 digits")
+    mobileNo: Yup.string()
+    .matches(/^[6-9][0-9]{9}$/, "Mobile number must start with 6, 7, 8, or 9 and be 10 digits")
     .required("Mobile number is required"),
   houseNo: Yup.string().required("House No is required"),
   street: Yup.string().required("Street is required"),
