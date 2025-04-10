@@ -13,9 +13,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const LandingPage = () => {
   const navigation = useNavigation();
 
-  const handleSkipLogin = async () => {
-    // Optional: Store a "guest" flag
-    await AsyncStorage.setItem("guestUser", "true");
+  const handleSkipLogin = async () =>{
+      
+    await AsyncStorage.setItem("userType", "guest");
     navigation.replace("Main");
   };
 

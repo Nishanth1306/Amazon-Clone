@@ -70,6 +70,16 @@ const Home = () => {
     }
   }, [userId, modalVisible]);
 
+    const [userType, setUserType] = useState("");
+  
+    useEffect(() => {
+      const getUserType = async () => {
+        const type = await AsyncStorage.getItem("userType");
+        setUserType(type);
+      };
+      getUserType();
+    }, []);
+
 
 
 

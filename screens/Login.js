@@ -37,6 +37,8 @@ const Login = () => {
     };
     checkLoginStatus();
   }, []);
+
+ 
   const handleLogin = () => {
     const user = {
       email: email,
@@ -48,6 +50,7 @@ const Login = () => {
       .then(async (response) => {
         const token = response.data.token;
         await AsyncStorage.setItem("authToken", token);
+        await AsyncStorage.setItem("userType", "registered");
 
         navigation.replace("Main");
       })

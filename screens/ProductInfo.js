@@ -7,14 +7,17 @@ import {
   TextInput,
   ImageBackground,
   Dimensions,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { AntDesign, Feather } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { addToCart } from "../redux/CartReducer";
 import { useSelector, useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const ProductInfo = () => {
   const route = useRoute();
@@ -33,6 +36,19 @@ const ProductInfo = () => {
       setAddedToCart(false);
     }, 5000);
   };
+
+  const [userType, setUserType] = useState("");
+
+  useEffect(() => {
+    const getUserType = async () => {
+      const type = await AsyncStorage.getItem("userType");
+      console.log(type);
+      setUserType(type);
+    };
+    getUserType();
+  }, []);
+
+  console.log(userType);
 
   const cart = useSelector((state) => state.cart.cart);
   console.log(cart);
@@ -200,7 +216,25 @@ const ProductInfo = () => {
         </Text>
 
         <Pressable
-          onPress={() => addItemToCart(route?.params.item)}
+          onPress={() => {
+            console.log(userType);
+            if (userType === "guest") {
+              Alert.alert(
+                "Guest Access",
+                "You need to log in to add items to your cart.",
+                [
+                  { text: "Cancel", style: "cancel" },
+                  {
+                    text: "Login",
+                    onPress: () => navigation.navigate("Login"),
+                  },
+                ]
+              );
+              return;
+            }
+
+            addItemToCart(route?.params.item);
+          }}
           style={{
             backgroundColor: "#FFC72C",
             padding: 10,
@@ -221,7 +255,7 @@ const ProductInfo = () => {
         </Pressable>
 
         <Pressable
-        onPress={()=> navigation.navigate("ConfirmationScreen")}
+          onPress={() => navigation.navigate("ConfirmationScreen")}
           style={{
             backgroundColor: "#FFAC1C",
             padding: 10,

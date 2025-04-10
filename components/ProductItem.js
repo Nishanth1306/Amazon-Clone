@@ -36,7 +36,21 @@ const ProductItem = ({ item }) => {
       </View>
 
       <Pressable
-        onPress={() => addItemToCart(item)}
+        onPress={() => {
+          if (userType === "guest") {
+            Alert.alert(
+              "Guest Access",
+              "You need to log in to add items to your cart.",
+              [
+                { text: "Cancel", style: "cancel" },
+                { text: "Login", onPress: () => navigation.navigate("Login") },
+              ]
+            );
+            return;
+          }
+
+          addItemToCart(item);
+        }}
         style={{
           backgroundColor: "#FFC72C",
           padding: 10,

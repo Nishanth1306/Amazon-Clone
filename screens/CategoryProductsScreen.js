@@ -28,6 +28,16 @@ const CategoryProductsScreen = ({ route }) => {
     }, 2000);
   };
 
+  const [userType, setUserType] = useState("");
+
+  useEffect(() => {
+    const getUserType = async () => {
+      const type = await AsyncStorage.getItem("userType");
+      setUserType(type);
+    };
+    getUserType();
+  }, []);
+
   const cart = useSelector((state) => state.cart.cart);
 
   useEffect(() => {
@@ -67,7 +77,19 @@ const CategoryProductsScreen = ({ route }) => {
       <Text style={styles.price}>{item.product_price}</Text>
 
       <Pressable
-        onPress={() =>
+        onPress={() =>{
+          if (userType === "guest") {
+            Alert.alert(
+              "Guest Access",
+              "You need to log in to add items to your cart.",
+              [
+                { text: "Cancel", style: "cancel" },
+                { text: "Login", onPress: () => navigation.navigate("Login") },
+              ]
+            );
+            return;
+          }
+          
           addItemToCart({
             id: item.asin,
             title: item.product_title,
@@ -75,8 +97,11 @@ const CategoryProductsScreen = ({ route }) => {
             image: item.product_photo,
             quantity: 1,
           })
-        }
-        style={styles.cartButton}
+        }}
+        style={[
+          styles.cartButton,
+          userType === "guest" && { backgroundColor: "#ccc" },
+        ]}
       >
         <Text style={styles.cartButtonText}>
           {addedProductId === item.asin ? "Added to Cart" : "Add to Cart"}
