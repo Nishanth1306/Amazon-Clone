@@ -97,11 +97,12 @@ resetPasswordExpires: Date,
     minlength: 6,
     validate: {
       validator: function (password) {
-        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(password);
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()_\-])[A-Za-z\d@$!%*?&()_\-]{6,}$/.test(password);
       },
       message:
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number and one special character",  
-    },
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (e.g. @$!%*?&()_-)",
+    }
+    
   },
   verified: {
     type: Boolean,
