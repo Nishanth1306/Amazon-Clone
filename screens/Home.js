@@ -12,8 +12,8 @@ import {
   StyleSheet,
   Dimensions,
   useWindowDimensions,
-  FlatList,
-  TouchableOpacity,
+ 
+ 
   list,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -35,6 +35,7 @@ import { fetchAmazonProducts } from "../amazon/amazon.js";
 import config from "../src/config.js";
 import ImageSlider from "../components/ImageSlider.js";
 import AddressModal from "../components/AddressModal.js";
+import Categories from "../components/Categories.js";
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -110,43 +111,7 @@ const Home = () => {
   //   setSelectedCategory(categoryName);
   // };
 
-  const categories = [
-    {
-      // id: "0",
-      image: "https://m.media-amazon.com/images/I/41EcYoIZhIL._AC_SY400_.jpg",
-      id: "Home",
-    },
-    {
-      // id: "1",
-      image:
-        "https://m.media-amazon.com/images/G/31/img20/Events/Jup21dealsgrid/blockbuster.jpg",
-      id: "Deals",
-    },
-    {
-      // id: "3",
-      image:
-        "https://images-eu.ssl-images-amazon.com/images/I/31dXEvtxidL._AC_SX368_.jpg",
-      id: "Electronics",
-    },
-    {
-      // id: "4",
-      image:
-        "https://m.media-amazon.com/images/G/31/img20/Events/Jup21dealsgrid/All_Icons_Template_1_icons_01.jpg",
-      id: "Mobiles",
-    },
-    {
-      // id: "5",
-      image:
-        "https://m.media-amazon.com/images/G/31/img20/Events/Jup21dealsgrid/music.jpg",
-      id: "Music",
-    },
-    {
-      // id: "6",
-      image: "https://m.media-amazon.com/images/I/51dZ19miAbL._AC_SY350_.jpg",
-      id: "Fashion",
-    },
-  ];
-
+ 
   const deals = [
     {
       id: "20",
@@ -317,32 +282,9 @@ const Home = () => {
             addresses={addresses}
             navigation={navigation}
           />
+          
+          <Categories/>
 
-          <View style={{ flex: 1, padding: 10 }}>
-            {/* Categories */}
-            <FlatList
-              data={categories}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={{ alignItems: "center", marginRight: 15 }}
-                  onPress={() =>
-                    navigation.navigate("CategoryProductsScreen", {
-                      query: item.id,
-                    })
-                  }
-                >
-                  <Image
-                    source={{ uri: item.image }}
-                    style={{ width: 60, height: 60, borderRadius: 30 }}
-                  />
-                  <Text>{item.id}</Text>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
 
           <ImageSlider />
 
@@ -516,22 +458,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  categoryItem: {
-    margin: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  categoryImage: {
-    width: 50,
-    height: 50,
-    resizeMode: "contain",
-  },
-  categoryText: {
-    textAlign: "center",
-    fontSize: 12,
-    fontWeight: "500",
-    marginTop: 5,
-  },
+  
   carouselItem: {
     justifyContent: "center",
     alignItems: "center",
