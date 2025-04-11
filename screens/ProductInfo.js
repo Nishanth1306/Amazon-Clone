@@ -42,16 +42,16 @@ const ProductInfo = () => {
   useEffect(() => {
     const getUserType = async () => {
       const type = await AsyncStorage.getItem("userType");
-      console.log(type);
+      //console.log(type);
       setUserType(type);
     };
     getUserType();
   }, []);
 
-  console.log(userType);
+  //console.log(userType);
 
   const cart = useSelector((state) => state.cart.cart);
-  console.log(cart);
+  //console.log(cart);
 
   return (
     <ScrollView

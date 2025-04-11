@@ -14,7 +14,7 @@ import {
   useWindowDimensions,
   FlatList,
   TouchableOpacity,
-  list
+  list,
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -29,15 +29,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { BottomModal, ModalContent, SlideAnimation } from "react-native-modals";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Carousel from "react-native-reanimated-carousel";
+
 import { jwtDecode } from "jwt-decode";
 import { fetchAmazonProducts } from "../amazon/amazon.js";
 import config from "../src/config.js";
-
-
-
+import ImageSlider from "../components/ImageSlider.js";
+import AddressModal from "../components/AddressModal.js";
 const Home = () => {
- 
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [filteredData, setFilteredData] = useState([]);
   const { width } = useWindowDimensions();
   const [Products, setProducts] = useState([]);
@@ -69,19 +69,6 @@ const Home = () => {
       fetchAddresses();
     }
   }, [userId, modalVisible]);
-
-    const [userType, setUserType] = useState("");
-  
-    useEffect(() => {
-      const getUserType = async () => {
-        const type = await AsyncStorage.getItem("userType");
-        setUserType(type);
-      };
-      getUserType();
-    }, []);
-
-
-
 
   const fetchAddresses = async () => {
     try {
@@ -157,21 +144,6 @@ const Home = () => {
       // id: "6",
       image: "https://m.media-amazon.com/images/I/51dZ19miAbL._AC_SY350_.jpg",
       id: "Fashion",
-    },
-  ];
-
-  const images = [
-    {
-      id: "1",
-      uri: "https://img.etimg.com/thumb/msid-93051525,width-1070,height-580,imgsize-2243475,overlay-economictimes/photo.jpg",
-    },
-    {
-      id: "2",
-      uri: "https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wireless/devjyoti/PD23/Launches/Updated_ingress1242x550_3.gif",
-    },
-    {
-      id: "3",
-      uri: "https://images-eu.ssl-images-amazon.com/images/G/31/img23/Books/BB/JULY/1242x550_Header-BB-Jul23.jpg",
     },
   ];
 
@@ -326,8 +298,7 @@ const Home = () => {
   const addToCart = (product) => {
     dispatch(addToCartAction(product));
   };
-  const [modalVisible, setModalVisible] = useState(false);
-  
+
   return (
     <>
       <SafeAreaView style={styles.container}>
@@ -340,28 +311,12 @@ const Home = () => {
             <Entypo name="mic" size={24} color="black" />
           </View>
 
-          <Pressable
-            style={styles.locationBar}
-            onPress={() => setModalVisible(!modalVisible)}
-          >
-            <Entypo name="location-pin" size={24} color="black" />
-
-            <Pressable>
-              {selectedAddress ? (
-                <Text>
-                  Delivery To {selectedAddress?.name} -{" "}
-                  {selectedAddress?.street}
-                </Text>
-              ) : (
-                <Text style={{ fontSize: 13, fontWeight: "500" }}>
-                  {" "}
-                  Add a Address
-                </Text>
-              )}
-            </Pressable>
-
-            <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
-          </Pressable>
+          <AddressModal
+            selectedAddress={selectedAddress}
+            setSelectedAddress={setSelectedAddress}
+            addresses={addresses}
+            navigation={navigation}
+          />
 
           <View style={{ flex: 1, padding: 10 }}>
             {/* Categories */}
@@ -372,36 +327,25 @@ const Home = () => {
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                style={{ alignItems: "center", marginRight: 15 }}
-                onPress={() => navigation.navigate("CategoryProductsScreen", { query: item.id })} 
-              >
-                <Image
-                  source={{ uri: item.image }}
-                  style={{ width: 60, height: 60, borderRadius: 30 }}
-                />
-                <Text>{item.id}</Text>
-              </TouchableOpacity>
-              
+                  style={{ alignItems: "center", marginRight: 15 }}
+                  onPress={() =>
+                    navigation.navigate("CategoryProductsScreen", {
+                      query: item.id,
+                    })
+                  }
+                >
+                  <Image
+                    source={{ uri: item.image }}
+                    style={{ width: 60, height: 60, borderRadius: 30 }}
+                  />
+                  <Text>{item.id}</Text>
+                </TouchableOpacity>
               )}
             />
           </View>
 
-          <Carousel
-            width={width}
-            height={200}
-            data={images}
-            renderItem={({ item }) => (
-              <View style={styles.carouselItem}>
-                <Image
-                  source={{ uri: item.uri }}
-                  style={styles.carouselImage}
-                />
-              </View>
-            )}
-            loop
-            autoPlay
-            autoPlayInterval={3000}
-          />
+          <ImageSlider />
+
           <Text style={{ padding: 10, fontSize: 18, fontWeight: "bold" }}>
             Trending Deals for You
           </Text>
@@ -540,130 +484,6 @@ const Home = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <BottomModal
-        onBackdropPress={() => setModalVisible(!modalVisible)}
-        swipeDirection={["up", "down"]}
-        swipeThreshold={200}
-        modalAnimation={
-          new SlideAnimation({
-            slideFrom: "bottom",
-          })
-        }
-        onHardwareBackPress={() => setModalVisible(!modalVisible)}
-        visible={modalVisible}
-        onTouchOutside={() => setModalVisible(!modalVisible)}
-      >
-        <ModalContent style={{ width: "100%", height: 400 }}>
-          <View style={{ marginButtom: 8 }}>
-            <Text style={{ fontSize: 16, fontWeight: "500" }}>
-              Choose Your Location
-            </Text>
-            <Text style={{ marginTop: 5, fontSize: 15, color: "gray" }}>
-              Select a Delivery Location to see the Product Availability and
-              Delivery Options
-            </Text>
-          </View>
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
-            {addresses.map((item, index) => (
-              <Pressable
-                onPress={() => setSelectedAddress(item)}
-                style={{
-                  width: 140,
-                  height: 140,
-                  borderColor: "#D0D0D0",
-                  borderWidth: 1,
-                  marginTop: 10,
-                  padding: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 3,
-                  marginRight: 15,
-                  backgroundColor:
-                    selectedAddress === item ? "#FBCEB1" : "white",
-                }}
-              >
-                <View
-                  style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
-                >
-                  <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                    {item?.name}
-                  </Text>
-                  <EvilIcons name="location" size={24} color="red" />
-                </View>
-                <Text
-                  numberOfLines={1}
-                  style={{ width: 130, fontSize: 13, textAlign: "center" }}
-                >
-                  {item?.houseNo},{item?.landmark}
-                </Text>
-                <Text
-                  numberOfLines={1}
-                  style={{ width: 130, fontSize: 13, textAlign: "center" }}
-                >
-                  {item?.street}
-                </Text>
-              </Pressable>
-            ))}
-
-            <Pressable
-              onPress={() => {
-                setModalVisible(false);
-                navigation.navigate("Address");
-              }}
-              style={{
-                width: 140,
-                height: 140,
-                borderColor: "#D0D0D0",
-                marginTop: 10,
-                borderWidth: 1,
-                padding: 18,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontWeight: 500,
-                  color: "#0066B2",
-                }}
-              >
-                Add an Address
-              </Text>
-            </Pressable>
-          </ScrollView>
-
-          <View style={{ flexDirection: "column", marginBottom: 30, gap: 7 }}>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
-            >
-              <EvilIcons name="location" size={24} color="#0066B2" />
-              <Text style={{ color: "#0066B2", fontWeight: 400 }}>
-                Enter Your PinCode
-              </Text>
-            </View>
-
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
-            >
-              <Ionicons name="locate-sharp" size={24} color="#0066B2" />
-              <Text style={{ color: "#0066B2", fontWeight: 400 }}>
-                Use My Current Location
-              </Text>
-            </View>
-
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
-            >
-              <Entypo name="globe" size={24} color="#0066B2" />
-              <Text style={{ color: "#0066B2", fontWeight: 400 }}>
-                Delivery to Abroad
-              </Text>
-            </View>
-          </View>
-        </ModalContent>
-      </BottomModal>
     </>
   );
 };
@@ -695,17 +515,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
   },
-  locationBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-    padding: 10,
-    backgroundColor: "#AFEEEE",
-  },
-  locationText: {
-    fontSize: 13,
-    fontWeight: "500",
-  },
+
   categoryItem: {
     margin: 10,
     justifyContent: "center",
