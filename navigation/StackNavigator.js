@@ -18,11 +18,11 @@ import ConfirmationScreen from "../screens/ConfirmationScreen";
 import OrderScreen from "../screens/OrderScreen";
 import ForgotPassword from "../screens/ForgotPassword";
 import ResetPassword from "../screens/ResetPassword";
-<<<<<<< HEAD
+// <<<<<<< HEAD
 import CategoryProductsScreen from "../screens/CategoryProductsScreen";
 import LandingPage from "../screens/LandingPage";
-=======
->>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
+// =======
+// >>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -133,7 +133,7 @@ const StackNavigator = () => {
         />
 
         <Stack.Screen
-<<<<<<< HEAD
+// <<<<<<< HEAD
           name="CategoryProductsScreen"
           component={CategoryProductsScreen}
           options={{headerShown: false}}
@@ -146,8 +146,8 @@ const StackNavigator = () => {
         />
 
         <Stack.Screen
-=======
->>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
+// =======
+// >>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
           name="Order"
           component={OrderScreen}
           options={{ headerShown: false }}

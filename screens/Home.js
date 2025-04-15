@@ -12,12 +12,8 @@ import {
   StyleSheet,
   Dimensions,
   useWindowDimensions,
-<<<<<<< HEAD
- 
- 
   list,
-=======
->>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
+
 } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -40,12 +36,9 @@ import ImageSlider from "../components/ImageSlider.js";
 import AddressModal from "../components/AddressModal.js";
 import Categories from "../components/Categories.js";
 import TrendingDeals from "../components/TrendingDeals.js";
+import Carousel from "react-native-reanimated-carousel";
 const Home = () => {
-<<<<<<< HEAD
-  const [modalVisible, setModalVisible] = useState(false);
 
-=======
->>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
   const [filteredData, setFilteredData] = useState([]);
   const { width } = useWindowDimensions();
   const [Products, setProducts] = useState([]);
@@ -77,11 +70,7 @@ const Home = () => {
       fetchAddresses();
     }
   }, [userId, modalVisible]);
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
   const fetchAddresses = async () => {
     try {
       const response = await axios.get(
@@ -108,9 +97,9 @@ const Home = () => {
     fetchProducts();
   }, []);
 
-<<<<<<< HEAD
+
   const [aproducts, setaProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("Phone"); // default
+  const [selectedCategory, setSelectedCategory] = useState("Phone"); 
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -127,7 +116,7 @@ const Home = () => {
 
  
   
-=======
+
   const list = [
     {
       id: "0",
@@ -245,7 +234,6 @@ const Home = () => {
       ],
     },
   ];
->>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
 
   const offers = [
     {
@@ -332,10 +320,8 @@ const Home = () => {
   const addToCart = (product) => {
     dispatch(addToCartAction(product));
   };
-<<<<<<< HEAD
-=======
+
   const [modalVisible, setModalVisible] = useState(false);
->>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
 
   return (
     <>
@@ -349,66 +335,11 @@ const Home = () => {
             <Entypo name="mic" size={24} color="black" />
           </View>
 
-<<<<<<< HEAD
           <AddressModal
             selectedAddress={selectedAddress}
             setSelectedAddress={setSelectedAddress}
             addresses={addresses}
-            navigation={navigation}
-=======
-          <Pressable
-            style={styles.locationBar}
-            onPress={() => setModalVisible(!modalVisible)}
-          >
-            <Entypo name="location-pin" size={24} color="black" />
-
-            <Pressable>
-
-              {selectedAddress ? (
-                <Text>
-                  Delivery To  {selectedAddress?.name} - {selectedAddress?.street}
-                </Text>
-              ) : (
-                <Text style={{fontSize: 13,fontWeight:"500" }}> Add a Address</Text>
-              )}
-              
-
-
-
-            </Pressable>
-
-            <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
-          </Pressable>
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {list.map((item, index) => (
-              <Pressable key={index} style={styles.categoryItem}>
-                <Image
-                  style={styles.categoryImage}
-                  source={{ uri: item.image }}
-                />
-                <Text style={styles.categoryText}>{item?.name}</Text>
-              </Pressable>
-            ))}
-          </ScrollView>
-
-          <Carousel
-            width={width}
-            height={200}
-            data={images}
-            renderItem={({ item }) => (
-              <View style={styles.carouselItem}>
-                <Image
-                  source={{ uri: item.uri }}
-                  style={styles.carouselImage}
-                />
-              </View>
-            )}
-            loop
-            autoPlay
-            autoPlayInterval={3000}
->>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
-          />
+            navigation={navigation}/>
           
           <Categories/>
 
@@ -519,8 +450,6 @@ const Home = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-<<<<<<< HEAD
-=======
       <BottomModal
         onBackdropPress={() => setModalVisible(!modalVisible)}
         swipeDirection={["up", "down"]}
@@ -638,7 +567,6 @@ const Home = () => {
           </View>
         </ModalContent>
       </BottomModal>
->>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
     </>
   );
 };

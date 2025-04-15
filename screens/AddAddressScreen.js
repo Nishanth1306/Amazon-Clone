@@ -32,7 +32,7 @@ const AddAddressScreen = () => {
   const fetchAddresses = async () => {
     try {
       const response = await axios.get(
-        `${config.API_URL}/addresses/67e3b41271db4f020e0e2417`
+        `${config.API_URL}/addresses/:${userId}`
       );
       const { addresses } = response.data;
 

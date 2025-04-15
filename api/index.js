@@ -196,7 +196,7 @@ app.post("/addresses", async (req, res) => {
     
     
     const user = await User.findById(userId);
-    console.log(user);
+    console.log(user, address);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -220,7 +220,7 @@ app.get("/addresses/:userId", async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    console.log(user)
     const addresses = user.addresses;
     res.status(200).json({ addresses });
   } catch (error) {

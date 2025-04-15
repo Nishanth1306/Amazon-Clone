@@ -39,7 +39,9 @@ const ConfirmationScreen = () => {
         `${config.API_URL}/addresses/${userId}`
       );
       const { addresses } = response.data;
-
+      console.log('====================================');
+      console.log(response.data);
+      console.log('====================================');
       setAddresses(addresses);
     } catch (error) {
       console.log("error", error);
@@ -129,7 +131,7 @@ const ConfirmationScreen = () => {
           }}
         >
           {steps?.map((step, index) => (
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <View key={index} style={{ justifyContent: "center", alignItems: "center" }}>
               {index > 0 && (
                 <View
                   style={[
@@ -182,6 +184,7 @@ const ConfirmationScreen = () => {
           <Pressable>
             {addresses?.map((item, index) => (
               <Pressable
+              key={index}
                 style={{
                   borderWidth: 1,
                   borderColor: "#D0D0D0",
