@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View,Pressable,Image } from "react-native";
 import React from "react";
-
+import { useNavigation } from "@react-navigation/native";
+ 
 const TrendingDeals = () => {
+    const navigation = useNavigation();
   const deals = [
     {
       id: "20",
