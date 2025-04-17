@@ -16,7 +16,7 @@ export const fetchAmazonProducts = async (query = 'Phone') => {
       deals_and_discounts: 'NONE',
     },
     headers: {
-      'x-rapidapi-key': 'dd87f09ed3mshee0b2f36f365be3p1b4f72jsnb149958c7626',
+      'x-rapidapi-key': 'd53e16b26fmshb0c79e088cd8997p19fe19jsn1f080e78740b',
     'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com',
     },
   };

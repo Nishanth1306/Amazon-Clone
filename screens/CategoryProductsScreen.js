@@ -52,7 +52,7 @@ const CategoryProductsScreen = ({ route }) => {
               country: "US",
             },
             headers: {
-              //"x-rapidapi-key": "dd87f09ed3mshee0b2f36f365be3p1b4f72jsnb149958c7626",
+              "x-rapidapi-key": "d53e16b26fmshb0c79e088cd8997p19fe19jsn1f080e78740b",
               "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
             },
           }
@@ -116,6 +116,8 @@ const CategoryProductsScreen = ({ route }) => {
       keyExtractor={(item) => item.asin}
       renderItem={renderItem}
       contentContainerStyle={styles.container}
+      initialNumToRender={5}
+      maxToRenderPerBatch={10}
     />
   );
 };
