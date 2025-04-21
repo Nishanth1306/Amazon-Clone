@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const MenuScreen = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [activeCard, setActiveCard] = useState(null);
+  const [bottomModal, setBottomModal] = useState(true);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -117,15 +118,43 @@ const MenuScreen = () => {
               </View>
             ) : activeCard === "mobile" ? (
               <View style={styles.fullWidthDropdown}>
-                <Text style={styles.detailText}>
-                  Mobiles, Electronics & Alexa Deals
-                </Text>
+                <View style={styles.modelText}>
+                  <Text style={styles.modelTextOnly}>Mobiles & Accessories</Text>
+                  <Text style={styles.modelTextOnly}>Electronics</Text>
+                  <Text style={styles.modelTextOnly}>Laptops</Text>
+                  <Text style={styles.modelTextOnly}>Home Appliances</Text>
+                  <Text style={styles.modelTextOnly}>Television</Text>
+                  <Text style={styles.modelTextOnly}>Echo, Kindle & More</Text>
+                  <Text style={styles.modelTextOnly}>Smart Home</Text>
+                  <Text style={styles.modelTextOnly}>Kitchen Appliances</Text>
+                  <Text style={styles.modelTextOnly}>Headphones</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Live</Text>
+                  <Text style={styles.modelTextOnly}>Smart Watches</Text>
+                  <Text style={styles.modelTextOnly}>Video Games</Text>
+                  <Text style={styles.modelTextOnly}>Software</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Business</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Launchpad</Text>
+                  <Text style={styles.modelTextOnly}>Local Shops</Text>
+                  <Text style={styles.modelTextOnly}>Internation Brands</Text>                  
+
+                </View>
               </View>
             ) : activeCard === "deals" ? (
               <View style={styles.fullWidthDropdown}>
-                <Text style={styles.detailText}>
-                  Check out the latest savings!
-                </Text>
+                <View style={styles.modelText}>
+                  <Text style={styles.modelTextOnly}>Today's Deals</Text>
+                  <Text style={styles.modelTextOnly}>Rewards</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Live</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Bazaar</Text>
+                  <Text style={styles.modelTextOnly}>Buy more, Save More</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Renewed</Text>
+                  <Text style={styles.modelTextOnly}>Subscribe & Save</Text>
+                  <Text style={styles.modelTextOnly}>Clearance Store</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Coupons</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Combos</Text>
+                                 
+
+                </View>
               </View>
             ) : null)}
 
