@@ -18,11 +18,10 @@ import ConfirmationScreen from "../screens/ConfirmationScreen";
 import OrderScreen from "../screens/OrderScreen";
 import ForgotPassword from "../screens/ForgotPassword";
 import ResetPassword from "../screens/ResetPassword";
-// <<<<<<< HEAD
 import CategoryProductsScreen from "../screens/CategoryProductsScreen";
 import LandingPage from "../screens/LandingPage";
-// =======
-// >>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
+import Language from "../screens/Language";
+import MenuScreen from "../screens/MenuScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -61,6 +60,7 @@ function BottomTabs() {
             ),
         }}
       />
+      
 
       <Tab.Screen
         name="Cart"
@@ -76,6 +76,22 @@ function BottomTabs() {
               <AntDesign name="shoppingcart" size={24} color="black" />
             ),
         }}
+      />
+      <Tab.Screen
+      name="Menu"
+      component={MenuScreen}
+      options={{
+        tabBarLabel:"Menu",
+        tabBarLabelStyle:{color:"#008E97"},
+        headerShown:false,
+        tabBarIcon: ({ focused }) =>
+          focused ? (
+            <Entypo name="menu" size={24}  color="#008E97" />
+          ) : (
+            <Entypo name="menu" size={24} color="black" />
+          ),
+
+      }}
       />
     </Tab.Navigator>
   );
@@ -107,6 +123,12 @@ const StackNavigator = () => {
         />
 
         <Stack.Screen
+          name="Language"
+          component={Language}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
           name="Address"
           component={AddAddressScreen}
           options={{ headerShown: false }}
@@ -117,8 +139,7 @@ const StackNavigator = () => {
           component={ForgotPassword}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="ResetPassword"
-         component={ResetPassword} />
+        <Stack.Screen name="ResetPassword" component={ResetPassword} />
 
         <Stack.Screen
           name="AddressScreen"
@@ -133,10 +154,9 @@ const StackNavigator = () => {
         />
 
         <Stack.Screen
-// <<<<<<< HEAD
           name="CategoryProductsScreen"
           component={CategoryProductsScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
@@ -146,8 +166,6 @@ const StackNavigator = () => {
         />
 
         <Stack.Screen
-// =======
-// >>>>>>> parent of 894bd60 (Rapid Api Integrated for Categories)
           name="Order"
           component={OrderScreen}
           options={{ headerShown: false }}

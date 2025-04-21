@@ -13,11 +13,10 @@ import {
   Dimensions,
   useWindowDimensions,
   list,
-
 } from "react-native";
-import AntDesign from "@expo/vector-icons/AntDesign";
+
 import Entypo from "@expo/vector-icons/Entypo";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+
 import { useState } from "react";
 import { UserType } from "../UserContext";
 import axios from "axios";
@@ -37,8 +36,8 @@ import AddressModal from "../components/AddressModal.js";
 import Categories from "../components/Categories.js";
 import TrendingDeals from "../components/TrendingDeals.js";
 import Carousel from "react-native-reanimated-carousel";
+import Search from "../components/Search.js";
 const Home = () => {
-
   const [filteredData, setFilteredData] = useState([]);
   const { width } = useWindowDimensions();
   const [Products, setProducts] = useState([]);
@@ -73,9 +72,7 @@ const Home = () => {
 
   const fetchAddresses = async () => {
     try {
-      const response = await axios.get(
-        `${config.API_URL}/addresses/${userId}`
-      );
+      const response = await axios.get(`${config.API_URL}/addresses/${userId}`);
       const { addresses } = response.data;
 
       setAddresses(addresses);
@@ -97,9 +94,8 @@ const Home = () => {
     fetchProducts();
   }, []);
 
-
   const [aproducts, setaProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("Phone"); 
+  const [selectedCategory, setSelectedCategory] = useState("Phone");
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -113,9 +109,6 @@ const Home = () => {
   // const handleCategoryPress = (categoryName) => {
   //   setSelectedCategory(categoryName);
   // };
-
- 
-  
 
   const list = [
     {
@@ -327,30 +320,21 @@ const Home = () => {
     <>
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <View style={styles.searchBar}>
-            <Pressable style={styles.searchInput}>
-              <AntDesign name="search1" size={24} color="black" />
-              <TextInput placeholder="Search" style={styles.input} />
-            </Pressable>
-            <Entypo name="mic" size={24} color="black" />
-          </View>
+          <Search/>
 
           <AddressModal
             selectedAddress={selectedAddress}
             setSelectedAddress={setSelectedAddress}
             addresses={addresses}
-            navigation={navigation}/>
-          
-          <Categories/>
+            navigation={navigation}
+          />
 
+          <Categories />
 
           <ImageSlider />
 
-          <TrendingDeals/>
+          <TrendingDeals />
 
-
-
-          
           <Text style={{ padding: 10, fontSize: 18, fontWeight: "bold" }}>
             Today's Deals
           </Text>
@@ -477,19 +461,20 @@ const Home = () => {
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {addresses.map((item, index) => (
               <Pressable
-              onPress={() => setSelectedAddress(item)}
+                onPress={() => setSelectedAddress(item)}
                 style={{
                   width: 140,
                   height: 140,
                   borderColor: "#D0D0D0",
-                  borderWidth:1,
-                  marginTop:10,
+                  borderWidth: 1,
+                  marginTop: 10,
                   padding: 10,
                   justifyContent: "center",
                   alignItems: "center",
                   gap: 3,
                   marginRight: 15,
-                  backgroundColor:selectedAddress===item ? "#FBCEB1" : "white",
+                  backgroundColor:
+                    selectedAddress === item ? "#FBCEB1" : "white",
                 }}
               >
                 <View
@@ -500,10 +485,16 @@ const Home = () => {
                   </Text>
                   <EvilIcons name="location" size={24} color="red" />
                 </View>
-                <Text numberOfLines={1} style={{width:130,fontSize:13,textAlign:"center"}}>
+                <Text
+                  numberOfLines={1}
+                  style={{ width: 130, fontSize: 13, textAlign: "center" }}
+                >
                   {item?.houseNo},{item?.landmark}
                 </Text>
-                <Text numberOfLines={1} style={{width:130,fontSize:13,textAlign:"center"}}>
+                <Text
+                  numberOfLines={1}
+                  style={{ width: 130, fontSize: 13, textAlign: "center" }}
+                >
                   {item?.street}
                 </Text>
               </Pressable>
@@ -575,31 +566,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    paddingTop: Platform.OS === "android" ? 40 : 0,
-  },
-  searchBar: {
-    backgroundColor: "#00CED1",
-    padding: 10,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  searchInput: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 7,
-    gap: 10,
-    backgroundColor: "white",
-    borderRadius: 5,
-    height: 40,
-    flex: 1,
-    paddingLeft: 10,
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
+    paddingTop: 0,
   },
 
-  
   carouselItem: {
     justifyContent: "center",
     alignItems: "center",

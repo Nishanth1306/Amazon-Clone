@@ -31,7 +31,7 @@ const GuestProfile = () => {
             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
             <Text>{greetings[index].text}</Text>
             <Pressable onPress={() =>{
-                console.log("Language Change Button is Clicked");
+                navigation.navigate("Language");
             }}>
             <Image source={require("../assets/IndianFlag.png")}
             style={{marginRight:10,width:20,height:20}} />

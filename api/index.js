@@ -101,7 +101,7 @@ app.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    console.log(req.body);
+    //console.log(req.body);
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -196,7 +196,7 @@ app.post("/addresses", async (req, res) => {
     
     
     const user = await User.findById(userId);
-    console.log(user, address);
+    //console.log(user, address);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -220,7 +220,7 @@ app.get("/addresses/:userId", async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log(user)
+    //console.log(user)
     const addresses = user.addresses;
     res.status(200).json({ addresses });
   } catch (error) {
@@ -321,7 +321,7 @@ app.post("/reset-password", async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    console.log(user); 
+    //console.log(user); 
 
     if (
       !user ||
@@ -352,3 +352,27 @@ app.post("/reset-password", async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 });
+
+app.delete("/addresses/:userId/:addressId", async (req, res) => {
+  const { userId, addressId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.addresses = user.addresses.filter(
+      (address) => address._id.toString() !== addressId
+    );
+
+    await user.save();
+
+    res.status(200).json({ message: "Address deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting address:", error);
+    res.status(500).json({ error: "Failed to delete address" });
+  }
+});
+

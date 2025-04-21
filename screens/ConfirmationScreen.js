@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, Pressable,Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Pressable,
+  Alert,
+} from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserType } from "../UserContext";
@@ -10,10 +17,6 @@ import { useNavigation } from "@react-navigation/native";
 import RazorpayCheckout from "react-native-razorpay";
 
 import config from "../src/config.js";
-
-
-
-
 
 const ConfirmationScreen = () => {
   const steps = [
@@ -35,13 +38,8 @@ const ConfirmationScreen = () => {
   }, []);
   const fetchAddresses = async () => {
     try {
-      const response = await axios.get(
-        `${config.API_URL}/addresses/${userId}`
-      );
+      const response = await axios.get(`${config.API_URL}/addresses/${userId}`);
       const { addresses } = response.data;
-      console.log('====================================');
-      console.log(response.data);
-      console.log('====================================');
       setAddresses(addresses);
     } catch (error) {
       console.log("error", error);
@@ -61,10 +59,7 @@ const ConfirmationScreen = () => {
         paymentMethod: selectedOption,
       };
 
-      const response = await axios.post(
-        `${config.API_URL}/orders`,
-        orderData
-      );
+      const response = await axios.post(`${config.API_URL}/orders`, orderData);
       if (response.status === 200) {
         navigation.navigate("Order");
         dispatch(cleanCart());
@@ -94,7 +89,7 @@ const ConfirmationScreen = () => {
 
       const data = await RazorpayCheckout.open(options);
 
-      console.log(data)
+      console.log(data);
 
       const orderData = {
         userId: userId,
@@ -104,10 +99,7 @@ const ConfirmationScreen = () => {
         paymentMethod: "card",
       };
 
-      const response = await axios.post(
-        `${config.API_URL}/orders`,
-        orderData
-      );
+      const response = await axios.post(`${config.API_URL}/orders`, orderData);
       if (response.status === 200) {
         navigation.navigate("Order");
         dispatch(cleanCart());
@@ -117,6 +109,38 @@ const ConfirmationScreen = () => {
       }
     } catch (error) {
       console.log("error", error);
+    }
+  };
+
+  const handleDelete = async (userId, addressId) => {
+    try {
+      Alert.alert(
+        "Delete Address",
+        "Are you sure you want to delete this address?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          {
+            text: "Delete",
+            onPress: async () => {
+              const response = await axios.delete(
+                `${config.API_URL}/addresses/${userId}/${addressId}`
+              );
+              if (response.status === 200) {
+                console.log("Deleted successfully:", addressId);
+                setAddresses((prev) =>
+                  prev.filter((item) => item._id !== addressId)
+                );
+              }
+            },
+          },
+        ]
+      );
+    } catch (error) {
+      console.error("Error deleting address:", error);
+      Alert.alert("Error", "Failed to delete the address.");
     }
   };
   return (
@@ -131,7 +155,10 @@ const ConfirmationScreen = () => {
           }}
         >
           {steps?.map((step, index) => (
-            <View key={index} style={{ justifyContent: "center", alignItems: "center" }}>
+            <View
+              key={index}
+              style={{ justifyContent: "center", alignItems: "center" }}
+            >
               {index > 0 && (
                 <View
                   style={[
@@ -184,7 +211,7 @@ const ConfirmationScreen = () => {
           <Pressable>
             {addresses?.map((item, index) => (
               <Pressable
-              key={index}
+                key={index}
                 style={{
                   borderWidth: 1,
                   borderColor: "#D0D0D0",
@@ -263,6 +290,10 @@ const ConfirmationScreen = () => {
                     </Pressable>
 
                     <Pressable
+                      onPress={() => {
+                        console.log("Deleted", item._id);
+                        handleDelete(userId, item._id);
+                      }}
                       style={{
                         backgroundColor: "#F5F5F5",
                         paddingHorizontal: 10,
