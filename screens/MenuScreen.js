@@ -5,7 +5,7 @@ import {
   View,
   ScrollView,
   Image,
-  Pressable,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import Search from "../components/Search";
@@ -16,7 +16,7 @@ const MenuScreen = () => {
       <ScrollView>
         <Search />
         <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-          <Pressable 
+          <TouchableOpacity 
           onPress={() => {
             console.log("Modal Pressed");
           }}
@@ -40,9 +40,9 @@ const MenuScreen = () => {
                 style={styles.Image}
               />
             </View>
-          </Pressable>
+          </TouchableOpacity>
 
-          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
             <View
               style={{
                 alignItems: "center",
@@ -58,9 +58,9 @@ const MenuScreen = () => {
                 style={styles.Image}
               />
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
             <View
               style={{
                 alignItems: "center",
@@ -76,9 +76,9 @@ const MenuScreen = () => {
                 style={styles.Image}
               />
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
             <View
               style={{
                 alignItems: "center",
@@ -94,9 +94,9 @@ const MenuScreen = () => {
                 style={styles.Image}
               />
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
             <View
               style={{
                 alignItems: "center",
@@ -112,9 +112,9 @@ const MenuScreen = () => {
                 style={styles.Image}
               />
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
             <View
               style={{
                 alignItems: "center",
@@ -130,9 +130,9 @@ const MenuScreen = () => {
                 style={styles.Image}
               />
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
             <View
               style={{
                 alignItems: "center",
@@ -148,9 +148,9 @@ const MenuScreen = () => {
                 style={styles.Image}
               />
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
             <View
               style={{
                 alignItems: "center",
@@ -166,9 +166,9 @@ const MenuScreen = () => {
                 style={styles.Image}
               />
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
             <View
               style={{
                 alignItems: "center",
@@ -184,7 +184,7 @@ const MenuScreen = () => {
                 style={styles.Image}
               />
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
