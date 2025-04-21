@@ -5,7 +5,6 @@ import {
   Image,
   Text,
   TextInput,
-  SafeAreaView,
   ScrollView,
   Platform,
   Pressable,
@@ -14,6 +13,8 @@ import {
   useWindowDimensions,
   list,
 } from "react-native";
+
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import Entypo from "@expo/vector-icons/Entypo";
 
@@ -318,7 +319,7 @@ const Home = () => {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
         <ScrollView>
           <Search/>
 
@@ -566,7 +567,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    paddingTop: 0,
   },
 
   carouselItem: {

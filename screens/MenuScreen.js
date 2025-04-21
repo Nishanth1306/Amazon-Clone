@@ -1,5 +1,4 @@
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
@@ -10,6 +9,8 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import Search from "../components/Search";
+
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const MenuScreen = () => {
   const [showDetails, setShowDetails] = useState(false);
