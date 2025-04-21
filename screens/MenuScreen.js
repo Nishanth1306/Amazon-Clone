@@ -6,22 +6,32 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Modal,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Search from "../components/Search";
 
 const MenuScreen = () => {
+  const [showDetails, setShowDetails] = useState(false);
+  const [activeCard, setActiveCard] = useState(null);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <Search />
-        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-          <TouchableOpacity 
-          onPress={() => {
-            console.log("Modal Pressed");
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "flex-start",
           }}
-          
-          style={{ paddingLeft: 10, paddingTop: 10 }}>
+        >
+          <TouchableOpacity
+            onPress={() =>
+              setActiveCard(activeCard === "amazon" ? null : "amazon")
+            }
+            style={{ paddingLeft: 10, paddingTop: 10 }}
+          >
             <View
               style={{
                 alignItems: "center",
@@ -30,8 +40,7 @@ const MenuScreen = () => {
                 width: 120,
                 backgroundColor: "white",
                 overflow: "hidden",
-                position: "relative",
-                flexDirection:'column'
+                //position: "relative",
               }}
             >
               <Text style={styles.text}>Amazon Pay</Text>
@@ -42,7 +51,12 @@ const MenuScreen = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity
+            onPress={() =>
+              setActiveCard(activeCard === "mobile" ? null : "mobile")
+            }
+            style={{ paddingLeft: 10, paddingTop: 10 }}
+          >
             <View
               style={{
                 alignItems: "center",
@@ -60,7 +74,12 @@ const MenuScreen = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity
+            onPress={() =>
+              setActiveCard(activeCard === "deals" ? null : "deals")
+            }
+            style={{ paddingLeft: 10, paddingTop: 10 }}
+          >
             <View
               style={{
                 alignItems: "center",
@@ -78,7 +97,33 @@ const MenuScreen = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
+          {["amazon", "mobile", "deals"].includes(activeCard) &&
+            (activeCard === "amazon" ? (
+              <View style={styles.fullWidthDropdown}>
+                <Text style={styles.detailText}>
+                  Welcome to Amazon Pay Section
+                </Text>
+              </View>
+            ) : activeCard === "mobile" ? (
+              <View style={styles.fullWidthDropdown}>
+                <Text style={styles.detailText}>
+                  Mobiles, Electronics & Alexa Deals
+                </Text>
+              </View>
+            ) : activeCard === "deals" ? (
+              <View style={styles.fullWidthDropdown}>
+                <Text style={styles.detailText}>
+                  Check out the latest savings!
+                </Text>
+              </View>
+            ) : null)}
+
+          <TouchableOpacity
+            onPress={() =>
+              setActiveCard(activeCard === "Groceries" ? null : "Groceries")
+            }
+            style={{ paddingLeft: 10, paddingTop: 10 }}
+          >
             <View
               style={{
                 alignItems: "center",
@@ -96,7 +141,12 @@ const MenuScreen = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity
+            onPress={() =>
+              setActiveCard(activeCard === "MiniTv" ? null : "MiniTv")
+            }
+            style={{ paddingLeft: 10, paddingTop: 10 }}
+          >
             <View
               style={{
                 alignItems: "center",
@@ -114,7 +164,12 @@ const MenuScreen = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity
+            onPress={() =>
+              setActiveCard(activeCard === "Fashion" ? null : "Fashion")
+            }
+            style={{ paddingLeft: 10, paddingTop: 10 }}
+          >
             <View
               style={{
                 alignItems: "center",
@@ -132,7 +187,27 @@ const MenuScreen = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
+          {["Groceries", "MiniTv", "Fashion"].includes(activeCard) &&
+            (activeCard === "Groceries" ? (
+              <View style={styles.fullWidthDropdown}>
+                <Text style={styles.detailText}>This is Groceries info</Text>
+              </View>
+            ) : activeCard === "MiniTv" ? (
+              <View style={styles.fullWidthDropdown}>
+                <Text style={styles.detailText}>This is the MiniTv modal</Text>
+              </View>
+            ) : activeCard === "Fashion" ? (
+              <View style={styles.fullWidthDropdown}>
+                <Text style={styles.detailText}>
+                  This is Fashion & Beauty section
+                </Text>
+              </View>
+            ) : null)}
+
+          <TouchableOpacity
+            onPress={() => setActiveCard(activeCard === "Home" ? null : "Home")}
+            style={{ paddingLeft: 10, paddingTop: 10 }}
+          >
             <View
               style={{
                 alignItems: "center",
@@ -150,7 +225,12 @@ const MenuScreen = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity
+            onPress={() =>
+              setActiveCard(activeCard === "Prime" ? null : "Prime")
+            }
+            style={{ paddingLeft: 10, paddingTop: 10 }}
+          >
             <View
               style={{
                 alignItems: "center",
@@ -168,7 +248,12 @@ const MenuScreen = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <TouchableOpacity
+            onPress={() =>
+              setActiveCard(activeCard === "Games" ? null : "Games")
+            }
+            style={{ paddingLeft: 10, paddingTop: 10 }}
+          >
             <View
               style={{
                 alignItems: "center",
@@ -185,6 +270,28 @@ const MenuScreen = () => {
               />
             </View>
           </TouchableOpacity>
+
+          {["Home", "Prime", "Games"].includes(activeCard) &&
+            (activeCard === "Home" ? (
+              <View style={styles.fullWidthDropdown}>
+                <Text style={styles.detailText}>
+                  Explore Home, Furniture & Decor
+                </Text>
+               
+              </View>
+            ) : activeCard === "Prime" ? (
+              <View style={styles.fullWidthDropdown}>
+                <Text style={styles.detailText}>
+                  Enjoy the best of Prime benefits!
+                </Text>
+              </View>
+            ) : activeCard === "Games" ? (
+              <View style={styles.fullWidthDropdown}>
+                <Text style={styles.detailText}>
+                  Welcome to Games & Live Shopping
+                </Text>
+              </View>
+            ) : null)}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -201,14 +308,18 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     justifyContent: "center",
-},
-  halfCircle: {
-    position: "absolute",
-    bottom: -50,
-    width: 90,
-    height: 90,
-    borderRadius: 60,
-    backgroundColor: "skyblue",
-    zIndex: 1,
+  },
+  detailText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+
+  fullWidthDropdown: {
+    width: "100%",
+    backgroundColor: "#e6f7ff",
+    padding: 20,
+    marginTop: 10,
+    borderRadius: 10,
+    paddingTop: 20,
   },
 });
