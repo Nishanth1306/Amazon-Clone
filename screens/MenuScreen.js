@@ -15,7 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const MenuScreen = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [activeCard, setActiveCard] = useState(null);
-  const [bottomModal, setBottomModal] = useState(true);
+  const [visible, setVisible] = useState(true);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -119,7 +119,9 @@ const MenuScreen = () => {
             ) : activeCard === "mobile" ? (
               <View style={styles.fullWidthDropdown}>
                 <View style={styles.modelText}>
-                  <Text style={styles.modelTextOnly}>Mobiles & Accessories</Text>
+                  <Text style={styles.modelTextOnly}>
+                    Mobiles & Accessories
+                  </Text>
                   <Text style={styles.modelTextOnly}>Electronics</Text>
                   <Text style={styles.modelTextOnly}>Laptops</Text>
                   <Text style={styles.modelTextOnly}>Home Appliances</Text>
@@ -135,8 +137,7 @@ const MenuScreen = () => {
                   <Text style={styles.modelTextOnly}>Amazon Business</Text>
                   <Text style={styles.modelTextOnly}>Amazon Launchpad</Text>
                   <Text style={styles.modelTextOnly}>Local Shops</Text>
-                  <Text style={styles.modelTextOnly}>Internation Brands</Text>                  
-
+                  <Text style={styles.modelTextOnly}>Internation Brands</Text>
                 </View>
               </View>
             ) : activeCard === "deals" ? (
@@ -152,8 +153,6 @@ const MenuScreen = () => {
                   <Text style={styles.modelTextOnly}>Clearance Store</Text>
                   <Text style={styles.modelTextOnly}>Amazon Coupons</Text>
                   <Text style={styles.modelTextOnly}>Amazon Combos</Text>
-                                 
-
                 </View>
               </View>
             ) : null)}
@@ -171,7 +170,7 @@ const MenuScreen = () => {
                 height: 150,
                 width: 120,
                 backgroundColor: "white",
-                marginBottom:10
+                marginBottom: 10,
               }}
             >
               <Text style={styles.text}>Groceries & Pet Supplies</Text>
@@ -256,7 +255,7 @@ const MenuScreen = () => {
                 height: 150,
                 width: 120,
                 backgroundColor: "white",
-                marginBottom:10
+                marginBottom: 10,
               }}
             >
               <Text style={styles.text}>Home, Furniture & Decor</Text>
@@ -335,6 +334,16 @@ const MenuScreen = () => {
             ) : null)}
         </View>
       </ScrollView>
+
+      <View style={styles.bottomSheet}>
+        <View style={{flexDirection:"row",justifyContent:"space-around"}}>
+            <Text>Orders</Text>
+            <Text>Accounts</Text>
+            <Text>Buy Again</Text>
+            <Text>List</Text>
+        </View>
+        
+      </View>
     </SafeAreaView>
   );
 };
@@ -357,11 +366,10 @@ const styles = StyleSheet.create({
   },
   modelText: {
     fontSize: 25,
-    gap:20
-
+    gap: 20,
   },
-  modelTextOnly:{
-    fontSize:17,
+  modelTextOnly: {
+    fontSize: 17,
   },
 
   fullWidthDropdown: {
@@ -373,5 +381,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginRight: 5,
     marginLeft: 5,
+  },
+  bottomSheet: {
+    backgroundColor: "white",
+    padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderTopWidth: 1,
+    borderColor: "#ccc",
+  },
+
+  modalTitle: {
+    fontSize: 18,
+    marginBottom: 10,
   },
 });
