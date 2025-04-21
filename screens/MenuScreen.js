@@ -40,6 +40,7 @@ const MenuScreen = () => {
                 width: 120,
                 backgroundColor: "white",
                 overflow: "hidden",
+                marginBottom: 10,
                 //position: "relative",
               }}
             >
@@ -100,9 +101,18 @@ const MenuScreen = () => {
           {["amazon", "mobile", "deals"].includes(activeCard) &&
             (activeCard === "amazon" ? (
               <View style={styles.fullWidthDropdown}>
-                <Text style={styles.detailText}>
-                  Welcome to Amazon Pay Section
-                </Text>
+                <View style={styles.modelText}>
+                  <Text style={styles.modelTextOnly}>Scan any QR</Text>
+                  <Text style={styles.modelTextOnly}>Send Money</Text>
+                  <Text style={styles.modelTextOnly}>Mobile Recharge</Text>
+                  <Text style={styles.modelTextOnly}>Bills & Recharge</Text>
+                  <Text style={styles.modelTextOnly}>Daily Transit</Text>
+                  <Text style={styles.modelTextOnly}>Gift Cards</Text>
+                  <Text style={styles.modelTextOnly}>Car & Bike Insurance</Text>
+                  <Text style={styles.modelTextOnly}>Subscriptions</Text>
+                  <Text style={styles.modelTextOnly}>Add Money</Text>
+                  <Text style={styles.modelTextOnly}>Rewards</Text>
+                </View>
               </View>
             ) : activeCard === "mobile" ? (
               <View style={styles.fullWidthDropdown}>
@@ -131,6 +141,7 @@ const MenuScreen = () => {
                 height: 150,
                 width: 120,
                 backgroundColor: "white",
+                marginBottom:10
               }}
             >
               <Text style={styles.text}>Groceries & Pet Supplies</Text>
@@ -215,6 +226,7 @@ const MenuScreen = () => {
                 height: 150,
                 width: 120,
                 backgroundColor: "white",
+                marginBottom:10
               }}
             >
               <Text style={styles.text}>Home, Furniture & Decor</Text>
@@ -277,7 +289,6 @@ const MenuScreen = () => {
                 <Text style={styles.detailText}>
                   Explore Home, Furniture & Decor
                 </Text>
-               
               </View>
             ) : activeCard === "Prime" ? (
               <View style={styles.fullWidthDropdown}>
@@ -312,14 +323,25 @@ const styles = StyleSheet.create({
   detailText: {
     fontSize: 16,
     marginBottom: 10,
+    textAlign: "center",
+  },
+  modelText: {
+    fontSize: 25,
+    gap:20
+
+  },
+  modelTextOnly:{
+    fontSize:17,
   },
 
   fullWidthDropdown: {
-    width: "100%",
-    backgroundColor: "#e6f7ff",
+    width: "98%",
+    backgroundColor: "white",
     padding: 20,
-    marginTop: 10,
     borderRadius: 10,
-    paddingTop: 20,
+    borderColor: "black",
+    borderWidth: 1,
+    marginRight: 5,
+    marginLeft: 5,
   },
 });
