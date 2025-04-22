@@ -121,40 +121,7 @@ const Login = () => {
             />
           </View>
         </View>
-
-        {/* <View style={{ marginTop: 10 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 5,
-              backgroundColor: "#D0D0D0",
-              paddingVertical: 5,
-              borderRadius: 5,
-              marginTop: 10,
-            }}
-          >
-            <MaterialIcons
-              style={{ marginLeft: 8 }}
-              name="password"
-              size={24}
-              color="black"
-            />
-            <TextInput
-              value={password}
-              onChangeText={setPassword}
-              style={{
-                color: "grey",
-                marginVertical: 7,
-                width: 300,
-                fontSize: 16,
-              }}
-              placeholder="Enter Password"
-              secureTextEntry={true}
-            />
-          </View>
-        </View> */}
-
+        
         <View style={{ marginTop: 10 }}>
           <View
             style={{

@@ -22,6 +22,7 @@ import CategoryProductsScreen from "../screens/CategoryProductsScreen";
 import LandingPage from "../screens/LandingPage";
 import Language from "../screens/Language";
 import MenuScreen from "../screens/MenuScreen";
+import Accounts from "../screens/Accounts";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -111,6 +112,13 @@ const StackNavigator = () => {
           component={Register}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen 
+        name="Accounts"
+        component={Accounts}
+        options={{headerShown: false}}
+        />
+
         <Stack.Screen
           name="Main"
           component={BottomTabs}

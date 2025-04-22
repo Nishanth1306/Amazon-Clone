@@ -107,10 +107,6 @@ const Home = () => {
     loadProducts();
   }, [selectedCategory]);
 
-  // const handleCategoryPress = (categoryName) => {
-  //   setSelectedCategory(categoryName);
-  // };
-
   const list = [
     {
       id: "0",

@@ -33,7 +33,7 @@ const UserProfile = () => {
   const clearAuthToken = async () => {
     await AsyncStorage.removeItem("authToken");
     console.log("auth token cleared");
-    navigation.replace("Login");
+    navigation.reset("Login");
   };
   return (
     <ScrollView

@@ -6,9 +6,11 @@ import {
   Image,
   TouchableOpacity,
   Modal,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import Search from "../components/Search";
+import { useNavigation } from "@react-navigation/native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -16,6 +18,7 @@ const MenuScreen = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [activeCard, setActiveCard] = useState(null);
   const [visible, setVisible] = useState(true);
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -230,17 +233,45 @@ const MenuScreen = () => {
           {["Groceries", "MiniTv", "Fashion"].includes(activeCard) &&
             (activeCard === "Groceries" ? (
               <View style={styles.fullWidthDropdown}>
-                <Text style={styles.detailText}>This is Groceries info</Text>
+                <View style={styles.modelText}>
+                  <Text style={styles.modelTextOnly}>Everyday Store</Text>
+                  <Text style={styles.modelTextOnly}>Grooceries & Gourmet</Text>
+                  <Text style={styles.modelTextOnly}>Pet Supplies</Text>
+                  <Text style={styles.modelTextOnly}>Buy it Again</Text>
+                  <Text style={styles.modelTextOnly}>Subscribe & Save</Text>
+                
+                </View>
               </View>
             ) : activeCard === "MiniTv" ? (
               <View style={styles.fullWidthDropdown}>
-                <Text style={styles.detailText}>This is the MiniTv modal</Text>
+                <View style={styles.modelText}>
+                  <Text style={styles.modelTextOnly}>Amazon MX Player</Text>
+                  <Text style={styles.modelTextOnly}>Prime Video</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Live</Text>
+                  <Text style={styles.modelTextOnly}>Speakers</Text>
+                  <Text style={styles.modelTextOnly}>Musical Instruments</Text>
+                  <Text style={styles.modelTextOnly}>Prime Music</Text>
+                  <Text style={styles.modelTextOnly}>Movie Tickets</Text>
+                </View>
               </View>
             ) : activeCard === "Fashion" ? (
               <View style={styles.fullWidthDropdown}>
-                <Text style={styles.detailText}>
-                  This is Fashion & Beauty section
-                </Text>
+                <View style={styles.modelText}>
+                  <Text style={styles.modelTextOnly}>Women's Clothing</Text>
+                  <Text style={styles.modelTextOnly}>Men's Clothng</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Bazaar</Text>
+                  <Text style={styles.modelTextOnly}>Kids' Fashion</Text>
+                  <Text style={styles.modelTextOnly}>Beauty & Makeup</Text>
+                  <Text style={styles.modelTextOnly}>Amazon Live</Text>
+                  <Text style={styles.modelTextOnly}>Shoes & Footwear</Text>
+                  <Text style={styles.modelTextOnly}>Bags & Luggage</Text>
+                  <Text style={styles.modelTextOnly}>Watches</Text>
+                  <Text style={styles.modelTextOnly}>Jewellery</Text>
+                  <Text style={styles.modelTextOnly}>Eyewear</Text> 
+                  <Text style={styles.modelTextOnly}>Grooming Appliances</Text>
+                  <Text style={styles.modelTextOnly}>Customers' Most Loved</Text>
+
+                </View>
               </View>
             ) : null)}
 
@@ -337,10 +368,26 @@ const MenuScreen = () => {
 
       <View style={styles.bottomSheet}>
         <View style={{flexDirection:"row",justifyContent:"space-around"}}>
+          <Pressable
+            style={{borderColor:"black",height:40,width:70,justifyContent:"center",alignItems:"center",borderRadius:10,borderWidth:1}}>
             <Text>Orders</Text>
+            </Pressable>
+            <Pressable
+            onPress={() => 
+              navigation.navigate("Accounts")}
+            style={{borderColor:"black",width:80,justifyContent:"center",alignItems:"center",borderRadius:10,borderWidth:1}}>
             <Text>Accounts</Text>
+            </Pressable>
+            <Pressable
+            style={{borderColor:"black",width:80,justifyContent:"center",alignItems:"center",borderRadius:10,borderWidth:1}}>
+          
             <Text>Buy Again</Text>
+            </Pressable>
+            <Pressable
+            style={{borderColor:"black",width:80,justifyContent:"center",alignItems:"center",borderRadius:10,borderWidth:1}}>
+          
             <Text>List</Text>
+            </Pressable>
         </View>
         
       </View>
